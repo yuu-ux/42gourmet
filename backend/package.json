@@ -1,18 +1,26 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "main.js",
+  "type": "module",
+  "main": "index.js",
   "scripts": {
-    "dev": "node --watch server.js"
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "seed": "node seeds/seed.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "description": "",
-  "devDependencies": {
-    "csv-parser": "^3.2.0",
+  "dependencies": {
+    "@fastify/error": "^4.1.0",
+    "@fastify/swagger": "^8.14.0",
+    "@fastify/swagger-ui": "^3.1.0",
     "dotenv": "^16.5.0",
-    "mysql2": "^3.14.0",
+    "fastify": "^4.25.0",
+    "mysql2": "^3.14.0"
+  },
+  "devDependencies": {
     "static-google-map": "^0.0.5"
   }
 }
