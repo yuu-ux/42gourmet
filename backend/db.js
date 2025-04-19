@@ -27,12 +27,13 @@ async function importShopsFromCSV(filePath, connection){
 				data.close_time,
 				data.price_level,
 				data.latitude,
-				data.longitude
+				data.longitude,
+				data.genre
 			]))
 			.on("end", ()=>{
 				const sql = `
-					INSERT INTO places (id, name, address, open_time, close_time, price_level, latitude, longitude)
-					VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+					INSERT INTO places (id, name, address, open_time, close_time, price_level, latitude, longitude, genre)
+					VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 				`;
 				for(const row of results){
 					try{
@@ -54,6 +55,13 @@ export async function getShops(){
 	return rows;
 }
 
+export async function getShopById(id) {
+	const connection = await createConnection(dbConfig);
+	const [rows] = await connection.execute("SELECT * FROM places WHERE id = ?", [id]);
+	await connection.end();
+	return rows[0] || null;
+}
+
 export async function initDatabase(){
 	const connection = await createConnection(dbConfig);
 	await connection.execute(`
@@ -65,7 +73,8 @@ export async function initDatabase(){
 		  close_time TEXT,
 		  price_level INT,
 		  latitude DECIMAL(10, 8),
-		  longitude DECIMAL(11, 8)
+		  longitude DECIMAL(11, 8),
+		  genre VARCHAR(255)
 		);
 	  `);
 
