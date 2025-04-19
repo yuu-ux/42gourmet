@@ -15,10 +15,20 @@ const mainHandler = (req, res) => {
 };
 
 const shopHandler = async (req, res) => {
-	res.statusCode = 200;
-	res.setHeader("Content-Type", "application/json");
-	const shops = await getShops();
-	res.end(JSON.stringify(shops));
+	const url_ = url.parse(req.url, true);
+	const genre = url_.query.genre;
+
+	try {
+		const shops = await getShops(genre);
+		res.statusCode = 200;
+		res.setHeader("Content-Type", "application/json");
+		res.end(JSON.stringify(shops));
+	} catch (error) {
+		console.error("Error fetching shops:", error);
+		res.statusCode = 500;
+		res.setHeader("Content-Type", "text/plain");
+		res.end("Internal Server Error");
+	}
 }
 
 const notFoundHandler = (req, res) => {

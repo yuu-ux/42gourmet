@@ -49,9 +49,16 @@ async function importShopsFromCSV(filePath, connection){
 	})
 }
 
-export async function getShops(){
+export async function getShops(genre) {
 	const connection = await createConnection(dbConfig);
-	const [rows] = await connection.execute("SELECT * FROM places");
+	let sql = "SELECT * FROM places";
+	const params = [];
+	if (genre) {
+		sql += " WHERE genre = ?";
+		params.push(genre);
+	}
+	const [rows] = await connection.execute(sql, params);
+	await connection.end();
 	return rows;
 }
 
