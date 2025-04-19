@@ -8,7 +8,7 @@ export const findAllStores = async (filters = {}) => {
       s.*,
       GROUP_CONCAT(
         JSON_OBJECT(
-          'day', oh.day_of_week,
+          'day_of_week', oh.day_of_week,
           'open_time', oh.open_time,
           'close_time', oh.close_time
         )
@@ -62,7 +62,7 @@ export const findStoreById = async (id) => {
   }
 
   const [hoursRows] = await pool.query(
-    'SELECT day_of_week as day, open_time, close_time FROM store_operation_hours WHERE store_id = ?',
+    'SELECT day_of_week, open_time, close_time FROM store_operation_hours WHERE store_id = ?',
     [id]
   );
 
@@ -75,20 +75,22 @@ export const findStoreById = async (id) => {
 export const createStore = async (storeData) => {
   const pool = await getConnection();
 
-  const { id, name, address, price_level, latitude, longitude, genre, reason, operation_hours } = storeData;
+  const { name, address, price_level, latitude, longitude, genre, reason, operation_hours } = storeData;
 
-  await pool.query(
-    'INSERT INTO stores (id, name, address, price_level, latitude, longitude, genre, reason) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
-    [id, name, address, price_level, latitude, longitude, genre, reason]
+  const [result] = await pool.query(
+    'INSERT INTO stores (name, address, price_level, latitude, longitude, genre, reason) VALUES (?, ?, ?, ?, ?, ?, ?)',
+    [name, address, price_level, latitude, longitude, genre, reason]
   );
 
+  const insertedId = result.insertId;
+
   if (operation_hours && operation_hours.length > 0) {
-    const hoursValues = operation_hours.map(hour => [id, hour.day, hour.open_time, hour.close_time]);
+    const hoursValues = operation_hours.map(hour => [insertedId, hour.day_of_week, hour.open_time, hour.close_time]);
     await pool.query(
       'INSERT INTO store_operation_hours (store_id, day_of_week, open_time, close_time) VALUES ?',
       [hoursValues]
     );
   }
 
-  return findStoreById(id);
+  return findStoreById(insertedId);
 };

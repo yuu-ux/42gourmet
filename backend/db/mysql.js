@@ -37,7 +37,7 @@ export const initDatabase = async () => {
   try {
     await connection.query(`
       CREATE TABLE IF NOT EXISTS stores (
-        id VARCHAR(255) PRIMARY KEY,
+        id INT AUTO_INCREMENT PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         address VARCHAR(500),
         price_level INT,
@@ -51,7 +51,7 @@ export const initDatabase = async () => {
     await connection.query(`
       CREATE TABLE IF NOT EXISTS store_operation_hours (
         id INT AUTO_INCREMENT PRIMARY KEY,
-        store_id VARCHAR(255) NOT NULL,
+        store_id INT NOT NULL,
         day_of_week ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') NOT NULL,
         open_time VARCHAR(10),
         close_time VARCHAR(10),

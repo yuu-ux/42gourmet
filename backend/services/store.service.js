@@ -30,10 +30,7 @@ export const getStoreById = async (id) => {
 export const addStore = async (storeData) => {
   validateStoreData(storeData);
 
-  const id = generateStoreId();
-
   return await createStore({
-    id,
     name: storeData.name,
     address: storeData.address || null,
     price_level: storeData.price_level || null,
@@ -57,10 +54,6 @@ const validateStoreData = (data) => {
     error.statusCode = 400;
     throw error;
   }
-};
-
-const generateStoreId = () => {
-  return `store_${Date.now()}_${Math.floor(Math.random() * 1000)}`;
 };
 
 const formatOperationHours = (hours) => {
