@@ -1,4 +1,4 @@
-import { findAllStores, findStoreById, createStore } from '../repositories/store.repository.js';
+import { findAllStores, findStoreById, createStore, deleteStore } from '../repositories/store.repository.js';
 
 export const getStores = async (queryParams = {}) => {
   const filters = {
@@ -40,6 +40,22 @@ export const addStore = async (storeData) => {
     reason: storeData.reason || null,
     operation_hours: formatOperationHours(storeData.operation_hours)
   });
+};
+
+export const removeStore = async (id) => {
+  if (!id) {
+    throw new Error('IDは必須です');
+  }
+
+  const result = await deleteStore(id);
+
+  if (!result) {
+    const error = new Error('レストランが見つかりません');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return result;
 };
 
 const validateStoreData = (data) => {

@@ -107,3 +107,29 @@ export const createStoreSchema = {
     }
   }
 };
+
+export const deleteStoreSchema = {
+  tags: ['Stores'],
+  description: 'レストランを削除',
+  params: {
+    type: 'object',
+    properties: {
+      id: { type: 'string' }
+    },
+    required: ['id']
+  },
+  response: {
+    200: {
+      type: 'object',
+      properties: {
+        id: { type: 'string' }
+      }
+    },
+    404: {
+      type: 'object',
+      properties: {
+        error: { type: 'string' }
+      }
+    }
+  }
+};

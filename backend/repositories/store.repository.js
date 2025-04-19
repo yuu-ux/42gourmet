@@ -94,3 +94,25 @@ export const createStore = async (storeData) => {
 
   return findStoreById(insertedId);
 };
+
+export const deleteStore = async (id) => {
+  const pool = await getConnection();
+
+  // 指定されたIDのストアが存在するか確認
+  const [storeRows] = await pool.query(
+    'SELECT id FROM stores WHERE id = ?',
+    [id]
+  );
+
+  if (storeRows.length === 0) {
+    return null;
+  }
+
+  // 外部キー制約によりstore_operation_hoursテーブルのレコードも自動的に削除される
+  await pool.query(
+    'DELETE FROM stores WHERE id = ?',
+    [id]
+  );
+
+  return { id };
+};
