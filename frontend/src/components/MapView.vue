@@ -1,5 +1,5 @@
 <template>
-  <div id="map" style="height: 500px; width: 100%;"></div>
+  <div id="map" style="height: 800px; width: 100%;"></div>
 </template>
 
 <script setup>
@@ -15,18 +15,6 @@ const initMap = () => {
 	center: { lat: 35.6907274197, lng: 139.6877882220 },
     zoom: 16
   })
-  fetchStores()
-}
-
-const fetchStores = async () => {
-  try {
-    const response = await fetch('http://localhost:3000/api/stores')
-    const data = await response.json()
-    stores.value = data
-    addMarkers()
-  } catch (error) {
-    console.error('failed to get informations for stores', error)
-  }
 }
 
 const addMarkers = () => {
