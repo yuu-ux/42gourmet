@@ -6,6 +6,7 @@ services:
     volumes:
       - ./frontend:/app
       - /app/node_modules
+      - ./backend/public:/app/dist
     environment:
       - NODE_ENV=development
     depends_on:
@@ -25,6 +26,7 @@ services:
       - DB_USER=root
       - DB_PASSWORD=password
       - DB_NAME=gourmet
+      - PORT=3000
     depends_on:
       - db
 

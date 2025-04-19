@@ -1,14 +1,20 @@
 const express = require('express');
 const fs = require('fs');
+const path = require('path')
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
 const DB_FILE = 'stores.json';
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public/index.html'));
+});
 
 // ストア情報を取得
 app.get('/api/stores', (req, res) => {
