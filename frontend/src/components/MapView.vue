@@ -20,7 +20,7 @@ const initMap = () => {
 
 const fetchStores = async () => {
   try {
-    const response = await fetch('http://localhost:5000/api/stores')
+    const response = await fetch('http://localhost:3000/api/stores')
     const data = await response.json()
     stores.value = data
     addMarkers()
