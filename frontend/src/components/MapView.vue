@@ -45,6 +45,7 @@ import { ref, onMounted } from 'vue'
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
 
+
 const map = ref(null)
 const mode = ref('default') // 'default' | 'search' | 'register'
 const searchQuery = ref('')
