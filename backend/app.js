@@ -49,4 +49,6 @@ export const startServer = async () => {
   }
 };
 
+app.use(express.json())
+
 export default app;
