@@ -78,7 +78,7 @@ const map = ref(null)
 
 const loadMapReference = () => {
   if (!map.value) {
-    map.value = new google.maps.Map(document.createElement('div')) 
+    map.value = new google.maps.Map(document.createElement('div'))
   }
 }
 
@@ -129,7 +129,7 @@ const selectPlace = (place) => {
 
 const registerStore = async () => {
   try {
-    await fetch('http://localhost:5000/api/stores', {
+    await fetch('http://localhost:3000/api/stores', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -151,7 +151,6 @@ const registerStore = async () => {
     selectedPlace.value = null
     searchQuery.value = ''
     searchResults.value = []
-    mode.value = 'default'
 
   } catch (error) {
     console.error('店舗登録エラー:', error)

@@ -1,6 +1,7 @@
 import Fastify from 'fastify';
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
+import cors from '@fastify/cors';
 import storeRoutes from './routes/store.route.js';
 import { connectDB } from './db/mysql.js';
 import staticPlugin from './plugin/static.js';
@@ -9,6 +10,12 @@ import fp  from 'fastify-plugin';
 const app = Fastify({
   logger: true
 });
+
+app.register(cors, {
+  origin: "*",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+});
+
 app.register(staticPlugin);
 app.register(fastifySwagger, {
   openapi: {
