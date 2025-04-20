@@ -127,22 +127,36 @@ const selectPlace = (place) => {
   })
 }
 
-const registerStore = () => {
-  console.log('登録するデータ:', {
-    name: selectedPlace.value.name,
-    address: selectedPlace.value.formatted_address,
-    hours: selectedPlace.value.opening_hours ? selectedPlace.value.opening_hours.weekday_text : '',
-    price: selectedPlace.value.price_level,
-    latitude: selectedPlace.value.geometry.location.lat(),
-    longitude: selectedPlace.value.geometry.location.lng(),
-    genre: genre.value,
-    reason: reason.value
-  })
-  alert('登録完了！（ここで保存処理できる）')
+const registerStore = async () => {
+  try {
+    await fetch('http://localhost:5000/api/stores', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: selectedPlace.value.name,
+        address: selectedPlace.value.formatted_address,
+        latitude: selectedPlace.value.geometry.location.lat(),
+        longitude: selectedPlace.value.geometry.location.lng(),
+        price: price.value,
+        genre: genre.value,
+        reason: reason.value,
+        hours: selectedPlace.value.opening_hours ? selectedPlace.value.opening_hours.weekday_text : []
+      })
+    })
+    alert('登録完了しました！')
 
-  selectedPlace.value = null
-  searchQuery.value = ''
-  genre.value = ''
-  reason.value = ''
+    // フォームリセット
+    selectedPlace.value = null
+    searchQuery.value = ''
+    searchResults.value = []
+    mode.value = 'default'
+
+  } catch (error) {
+    console.error('店舗登録エラー:', error)
+    alert('登録に失敗しました')
+  }
 }
+
 </script>
