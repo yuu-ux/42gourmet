@@ -116,3 +116,39 @@ export const deleteStore = async (id) => {
 
   return { id };
 };
+
+export const updateStore = async (id, storeData) => {
+  const pool = await getConnection();
+
+  // 指定されたIDのストアが存在するか確認
+  const [storeRows] = await pool.query(
+    'SELECT id FROM stores WHERE id = ?',
+    [id]
+  );
+
+  if (storeRows.length === 0) {
+    return null;
+  }
+
+  const { name, address, price_level, latitude, longitude, genre, reason, operation_hours } = storeData;
+
+  await pool.query(
+    'UPDATE stores SET name = ?, address = ?, price_level = ?, latitude = ?, longitude = ?, genre = ?, reason = ? WHERE id = ?',
+    [name, address, price_level, latitude, longitude, genre, reason, id]
+  );
+
+  if (operation_hours && operation_hours.length > 0) {
+    await pool.query(
+      'DELETE FROM store_operation_hours WHERE store_id = ?',
+      [id]
+    );
+
+    const hoursValues = operation_hours.map(hour => [id, hour.day_of_week, hour.open_time, hour.close_time]);
+    await pool.query(
+      'INSERT INTO store_operation_hours (store_id, day_of_week, open_time, close_time) VALUES ?',
+      [hoursValues]
+    );
+  }
+
+  return findStoreById(id);
+};

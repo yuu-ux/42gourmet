@@ -1,5 +1,5 @@
-import { getStores, getStoreById, addStore, removeStore } from '../services/store.service.js';
-import { getStoresSchema, getStoreByIdSchema, createStoreSchema, deleteStoreSchema } from '../schemas/store.schema.js';
+import { getStores, getStoreById, addStore, removeStore, updateStoreById } from '../services/store.service.js';
+import { getStoresSchema, getStoreByIdSchema, createStoreSchema, deleteStoreSchema, updateStoreSchema } from '../schemas/store.schema.js';
 
 export default async function (fastify) {
   fastify.get('/stores', {
@@ -31,6 +31,14 @@ export default async function (fastify) {
     handler: async (request) => {
       const result = await removeStore(request.params.id);
       return result;
+    }
+  });
+
+  fastify.put('/stores/:id', {
+    schema: updateStoreSchema,
+    handler: async (request) => {
+      const updatedStore = await updateStoreById(request.params.id, request.body);
+      return updatedStore;
     }
   });
 }

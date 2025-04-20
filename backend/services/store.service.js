@@ -1,4 +1,4 @@
-import { findAllStores, findStoreById, createStore, deleteStore } from '../repositories/store.repository.js';
+import { findAllStores, findStoreById, createStore, deleteStore, updateStore } from '../repositories/store.repository.js';
 
 export const getStores = async (queryParams = {}) => {
   const filters = {
@@ -48,6 +48,33 @@ export const removeStore = async (id) => {
   }
 
   const result = await deleteStore(id);
+
+  if (!result) {
+    const error = new Error('レストランが見つかりません');
+    error.statusCode = 404;
+    throw error;
+  }
+
+  return result;
+};
+
+export const updateStoreById = async (id, storeData) => {
+  if (!id) {
+    throw new Error('IDは必須です');
+  }
+
+  validateStoreData(storeData);
+
+  const result = await updateStore(id, {
+    name: storeData.name,
+    address: storeData.address || null,
+    price_level: storeData.price_level || null,
+    latitude: storeData.latitude || null,
+    longitude: storeData.longitude || null,
+    genre: storeData.genre || null,
+    reason: storeData.reason || null,
+    operation_hours: formatOperationHours(storeData.operation_hours)
+  });
 
   if (!result) {
     const error = new Error('レストランが見つかりません');
