@@ -4,13 +4,14 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import dotenv from 'dotenv';
 import storeRoutes from './routes/store.route.js';
 import { connectDB } from './db/mysql.js';
+import staticPlugin from './plugin/static.js';
 
 dotenv.config({ path: '../.env' });
 
 const app = Fastify({
   logger: true
 });
-
+app.register(staticPlugin);
 app.register(fastifySwagger, {
   openapi: {
     info: {
@@ -42,6 +43,7 @@ app.setErrorHandler((error, request, reply) => {
   request.log.error(error);
   reply.code(500).send({ error: 'サーバーエラーが発生しました' });
 });
+
 
 export const startServer = async () => {
   try {

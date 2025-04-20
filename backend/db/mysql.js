@@ -10,6 +10,7 @@ export const connectDB = async () => {
     pool = mysql.createPool({
       host: process.env.DB_HOST || 'localhost',
       user: process.env.DB_USER || 'dev',
+      port: process.env.DB_PORT || 13306,
       password: process.env.DB_PASSWORD || 'dev',
       database: process.env.DB_NAME || 'gourmet',
       waitForConnections: true,
