@@ -22,7 +22,7 @@ services:
     environment:
       - NODE_ENV=development
       - DB_HOST=db
-      - DB_PORT=13306
+      - DB_PORT=23306
       - DB_USER=root
       - DB_PASSWORD=password
       - DB_NAME=gourmet
@@ -36,9 +36,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: gourmet
-      DB_PORT: 13306
+      DB_PORT: 23306
     ports:
-      - "13306:13306"
+      - "23306:23306"
     volumes:
       - db-data:/var/lib/mysql
       - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
