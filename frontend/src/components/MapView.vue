@@ -85,8 +85,8 @@ const getMarkerIconByGenre = (genre) => {
   switch (genre) {
     case '和食': return 'https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png'
     case '中華': return 'https://maps.gstatic.com/mapfiles/ms2/micons/yellow-dot.png'
-    case 'イタリアン': return 'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png'
-    case 'フレンチ': return 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png'
+    case '洋食': return 'https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png'
+    case 'アジアン': return 'https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png'
     case 'カフェ': return 'https://maps.gstatic.com/mapfiles/ms2/micons/purple-dot.png'
     case '居酒屋': return 'https://maps.gstatic.com/mapfiles/ms2/micons/orange-dot.png'
     default: return 'https://maps.gstatic.com/mapfiles/ms2/micons/ltblue-dot.png'

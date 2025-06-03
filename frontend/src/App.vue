@@ -89,7 +89,10 @@ const toggleSidebar = () => {
 }
 
 const selectedGenre = ref(null)
-const genreOptions = ['和食', '中華', 'イタリアン', 'フレンチ', 'カフェ', '居酒屋', 'その他']
+const selectedPrice = ref(null)
+const selectedReason = ref(null)
+
+const genreOptions = ['和食', '中華', '洋食', 'アジアン', 'カフェ', '居酒屋', 'その他']
 const priceOptions = ['~500', '501~999', '1000~1500', '1501~']
 const reasonOptions = ['コスパが良い', '提供が早い', '味が最高', '栄養満点']
 

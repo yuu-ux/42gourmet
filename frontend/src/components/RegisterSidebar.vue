@@ -176,9 +176,21 @@ const registerStore = async () => {
 }
 
 function convertTo24Hour(timeStr, suffix) {
+  if (!timeStr || !suffix) {
+    console.warn('Invalid time input:', timeStr, suffix)
+    return '00:00'
+  }
+
   let [hour, minute] = timeStr.split(':').map(Number)
+
+  if (isNaN(hour) || isNaN(minute)) {
+    console.warn('Invalid time format:', timeStr)
+    return '00:00'
+  }
+
   if (suffix.toUpperCase() === 'PM' && hour !== 12) hour += 12
   if (suffix.toUpperCase() === 'AM' && hour === 12) hour = 0
+
   return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
 }
 
