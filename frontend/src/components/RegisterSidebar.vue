@@ -44,13 +44,15 @@
         class="mt-3"
       ></v-select>
 
-      <v-select
-        v-model="price"
-        :items="priceOptions"
-        label="価格帯"
-        dense
-        class="mt-3"
-      ></v-select>
+	  <v-select
+	    v-model="price"
+	    :items="priceOptions"
+	    label="価格帯"
+	    dense
+	    class="mt-3"
+	    :item-title="(item) => ['~500', '500~999', '1000~1500', '1500~'][item - 1]"
+	    :item-value="(item) => item"
+	  />
 
       <v-btn color="success" block class="mt-4" @click="registerStore">登録する</v-btn>
     </div>
@@ -72,9 +74,11 @@ const price = ref('')
 
 const genreOptions = ['和食', '中華', '洋食', 'アジアン', 'カフェ', '居酒屋', 'その他']
 const reasonOptions = ['コスパが良い', '提供が早い', '味が最高', '栄養満点']
-const priceOptions = ['~999', '1000~1999', '2000~2999', '3000~']
+const priceOptions = [1, 2, 3, 4]
 
 const map = ref(null)
+
+const emit = defineEmits(['store-registered'])
 
 const loadMapReference = () => {
   if (!map.value) {
@@ -124,12 +128,14 @@ const selectPlace = (place) => {
     }
 
     searchResults.value = []
+
+    console.log('▶ opening_hours.weekday_text', details.opening_hours?.weekday_text || '(none)')
   })
 }
 
 const registerStore = async () => {
   try {
-    await fetch('http://localhost:5000/api/stores', {
+    const response = await fetch('http://localhost:3000/api/stores', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -139,24 +145,91 @@ const registerStore = async () => {
         address: selectedPlace.value.formatted_address,
         latitude: selectedPlace.value.geometry.location.lat(),
         longitude: selectedPlace.value.geometry.location.lng(),
-        price: price.value,
+        price_level: price.value,
         genre: genre.value,
         reason: reason.value,
-        hours: selectedPlace.value.opening_hours ? selectedPlace.value.opening_hours.weekday_text : []
+        operation_hours: selectedPlace.value.opening_hours
+          ? parseOpeningHours(selectedPlace.value.opening_hours.weekday_text)
+          : []
       })
     })
-    alert('登録完了しました！')
 
-    // フォームリセット
+    if (!response.ok) {
+      const errText = await response.text()
+      throw new Error(`サーバーエラー: ${response.status} ${errText}`)
+    }
+
+    alert('登録完了しました！')
+	emit('store-registered') 
+
     selectedPlace.value = null
     searchQuery.value = ''
     searchResults.value = []
-    mode.value = 'default'
+    genre.value = ''
+    reason.value = ''
+    price.value = ''
 
   } catch (error) {
     console.error('店舗登録エラー:', error)
-    alert('登録に失敗しました')
+    alert('登録に失敗しました: ' + error.message)
   }
+}
+
+function convertTo24Hour(timeStr, suffix) {
+  let [hour, minute] = timeStr.split(':').map(Number)
+  if (suffix.toUpperCase() === 'PM' && hour !== 12) hour += 12
+  if (suffix.toUpperCase() === 'AM' && hour === 12) hour = 0
+  return `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`
+}
+
+const parseOpeningHours = (weekdayText) => {
+  const validDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+  const result = []
+
+  for (const entry of weekdayText) {
+    const normalizedEntry = entry
+      .replace(/[\u202F\u2009\u00A0]/g, ' ')
+      .replace(/[–—ー−]/g, '-') 
+      .replace(/\s*-\s*/g, '-') 
+      .replace(/\s+/g, ' ')
+      .trim()
+
+    const match = normalizedEntry.match(/^([A-Za-z]+):\s*(.+)$/)
+    if (!match) continue
+
+    const dayString = match[1]
+    const timeRanges = match[2]
+    if (!validDays.includes(dayString)) continue
+    if (timeRanges.toLowerCase().includes('closed')) continue
+
+    const ranges = timeRanges.split(',').map(r => r.trim())
+
+    for (const range of ranges) {
+      const timeMatch = range.match(/(\d{1,2}:\d{2})(?:\s*(AM|PM))?-(\d{1,2}:\d{2})(?:\s*(AM|PM))?/i)
+      if (!timeMatch) {
+        console.warn('⛔ 不明な時間形式:', range)
+        continue
+      }
+
+      let [, open, openSuffix, close, closeSuffix] = timeMatch
+
+      if (!openSuffix && closeSuffix) openSuffix = closeSuffix
+      if (!closeSuffix && openSuffix) closeSuffix = openSuffix
+      if (!openSuffix && !closeSuffix) openSuffix = closeSuffix = 'AM'
+
+      const openTime = convertTo24Hour(open, openSuffix)
+      const closeTime = convertTo24Hour(close, closeSuffix)
+
+      result.push({
+        day_of_week: dayString,
+        open_time: openTime,
+        close_time: closeTime
+      })
+    }
+  }
+
+  console.log('▶ parseOpeningHours result:', result)
+  return result
 }
 
 </script>

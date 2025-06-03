@@ -8,7 +8,14 @@
 import { ref, watch, onMounted } from 'vue'
 
 const props = defineProps({
-  showOnlyOpen: Boolean
+  showOnlyOpen: Boolean,
+  reloadTrigger: Number
+})
+
+watch(() => props.reloadTrigger, async () => {
+  console.log('🗺️ Reload triggered')
+  await fetchStores()
+  addMarkers()
 })
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY
@@ -22,12 +29,45 @@ const timeToMinutes = (t) => {
   const [h, m] = t.split(':').map(Number)
   return h * 60 + m
 }
+
 const isOpenNow = (hours) => {
   if (!hours || hours.length === 0) return false
+
   const now = new Date()
   const nowMinutes = now.getHours() * 60 + now.getMinutes()
-  const today = getTodayIndex()
-  return hours.some(h => h.day_of_week === today && timeToMinutes(h.open_time) <= nowMinutes && nowMinutes <= timeToMinutes(h.close_time))
+  const today = getTodayIndex() // e.g. 1 (Monday)
+
+  return hours.some(h => {
+    const hDay = typeof h.day_of_week === 'number'
+      ? h.day_of_week
+      : convertDayStringToIndex(h.day_of_week)
+    return hDay === today &&
+      timeToMinutes(h.open_time) <= nowMinutes &&
+      nowMinutes <= timeToMinutes(h.close_time)
+  })
+}
+
+const convertDayStringToIndex = (dayStr) => {
+  const map = {
+    Sunday: 0,
+    Monday: 1,
+    Tuesday: 2,
+    Wednesday: 3,
+    Thursday: 4,
+    Friday: 5,
+    Saturday: 6
+  }
+  return map[dayStr] ?? -1
+}
+
+const formatPriceLevel = (level) => {
+  const map = {
+    1: '~500',
+    2: '501~999',
+    3: '1000~1500',
+    4: '1501~'
+  }
+  return map[level] ?? '不明'
 }
 
 const getMarkerIconByGenre = (genre) => {
@@ -51,7 +91,7 @@ const addMarkers = () => {
   clearMarkers()
 
   const filteredStores = stores.value.filter(store => {
-    const open = isOpenNow(store.hours)
+    const open = isOpenNow(store.operation_hours)
     return props.showOnlyOpen ? open : true
   })
 
@@ -73,7 +113,7 @@ const addMarkers = () => {
           <p>住所: ${store.address}</p>
           <p>ジャンル: ${store.genre}</p>
           <p>おすすめ: ${store.reason}</p>
-          <p>価格帯: ${store.price}</p>
+		  <p>価格帯: ${formatPriceLevel(store.price_level)}</p>
         </div>
       `
     })
@@ -96,7 +136,7 @@ const addMarkers = () => {
 
 const fetchStores = async () => {
  try {
-   const response = await fetch('http://localhost:5000/api/stores')
+   const response = await fetch('http://localhost:3000/api/stores')
    const data = await response.json()
    stores.value = data
    addMarkers()
@@ -126,19 +166,16 @@ const initMap = async () => {
 const savedCenter = ref(null)
 const savedZoom = ref(null)
 
-// ✅ チェックボックス切り替え時にマーカーを再配置
 watch(() => props.showOnlyOpen, async () => {
   if (!map.value) return
 
-  // 現在の中心とズームを保存する
   savedCenter.value = map.value.getCenter()
   savedZoom.value = map.value.getZoom()
 
   clearMarkers()
 
-  await loadGoogleMapsAPI() // ← マップを読み直す（マップ本体を再生成）
+  await loadGoogleMapsAPI()
 
-  // 読み込み完了後に、元の中心とズームを復元する
   if (savedCenter.value && savedZoom.value) {
     map.value.setCenter(savedCenter.value)
     map.value.setZoom(savedZoom.value)
@@ -155,7 +192,7 @@ const loadGoogleMapsAPI = async () => {
     script.defer = true
     script.onload = () => {
       initMap()
-      resolve()  // ここで完了通知
+      resolve()
     }
     document.head.appendChild(script)
   })
