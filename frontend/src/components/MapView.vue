@@ -9,12 +9,23 @@ import { ref, watch, onMounted } from 'vue'
 
 const props = defineProps({
   showOnlyOpen: Boolean,
-  reloadTrigger: Number
+  reloadTrigger: Number,
+  selectedGenre: String,
+  selectedPrice: String,
+  selectedReason: String
 })
 
 watch(() => props.reloadTrigger, async () => {
   console.log('🗺️ Reload triggered')
   await fetchStores()
+  clearMarkers()
+
+  await loadGoogleMapsAPI()
+
+  if (savedCenter.value && savedZoom.value) {
+    map.value.setCenter(savedCenter.value)
+    map.value.setZoom(savedZoom.value)
+  }
   addMarkers()
 })
 
@@ -90,12 +101,15 @@ const clearMarkers = () => {
 const addMarkers = () => {
   clearMarkers()
 
-  const filteredStores = stores.value.filter(store => {
-    const open = isOpenNow(store.operation_hours)
-    return props.showOnlyOpen ? open : true
-  })
+	const filtered = stores.value.filter(store => {
+	  const openMatch = props.showOnlyOpen ? isOpenNow(store.operation_hours) : true
+	  const genreMatch = props.selectedGenre ? store.genre === props.selectedGenre : true
+	  const priceMatch = props.selectedPrice ? formatPriceLevel(store.price_level) === props.selectedPrice : true
+	  const reasonMatch = props.selectedReason ? store.reason === props.selectedReason : true
+	  return openMatch && genreMatch && priceMatch && reasonMatch
+	})
 
-  filteredStores.forEach(store => {
+  filtered.forEach(store => {
     const marker = new google.maps.Marker({
       position: { lat: store.latitude, lng: store.longitude },
       map: map.value,
@@ -113,7 +127,7 @@ const addMarkers = () => {
           <p>住所: ${store.address}</p>
           <p>ジャンル: ${store.genre}</p>
           <p>おすすめ: ${store.reason}</p>
-		  <p>価格帯: ${formatPriceLevel(store.price_level)}</p>
+          <p>価格帯: ${formatPriceLevel(store.price_level)}</p>
         </div>
       `
     })
@@ -133,6 +147,7 @@ const addMarkers = () => {
     markers.value.push(marker)
   })
 }
+
 
 const fetchStores = async () => {
  try {
