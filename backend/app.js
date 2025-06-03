@@ -1,4 +1,5 @@
 import Fastify from 'fastify';
+import cors from '@fastify/cors'
 import fastifySwagger from '@fastify/swagger';
 import fastifySwaggerUi from '@fastify/swagger-ui';
 import storeRoutes from './routes/store.route.js';
@@ -8,6 +9,10 @@ import fp  from 'fastify-plugin';
 
 const app = Fastify({
   logger: true
+});
+await app.register(cors, {
+  origin: true,
+  credentials: true
 });
 app.register(staticPlugin);
 app.register(fastifySwagger, {

@@ -73,8 +73,7 @@ export const initDatabase = async () => {
         day_of_week ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') NOT NULL,
         open_time VARCHAR(10),
         close_time VARCHAR(10),
-        CONSTRAINT fk_store_id FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE,
-        UNIQUE KEY unique_store_day (store_id, day_of_week)
+        CONSTRAINT fk_store_id FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE
       )
     `);
 
