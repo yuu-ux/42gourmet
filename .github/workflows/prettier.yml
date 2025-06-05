@@ -9,23 +9,20 @@ env:
 jobs:
   lint:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: 'yarn'
 
-      - name: Install dependencies
-        run: yarn install
+      - name: Fetch base branch
+        run: git fetch origin ${{ github.base_ref }}
 
-      - name: Get changed files and run Prettier
+      - name: Run Prettier on changed files
         run: |
-          git fetch origin ${{ github.base_ref }}
+          yarn install
           git diff --name-only origin/${{ github.base_ref }}...HEAD \
             | grep -E '\.(js|jsx|ts|tsx)$' \
             | tee changed_files.txt
@@ -33,10 +30,7 @@ jobs:
             cat changed_files.txt | xargs yarn prettier --write
           fi
 
-      - name: Commit Prettier changes
-        uses: stefanzweifel/git-auto-commit-action@v3.0.0
+      - uses: stefanzweifel/git-auto-commit-action@v3.0.0
         if: github.actor != 'github-actions[bot]'
         with:
           commit_message: Apply Prettier Change
-          branch: ${{ github.head_ref }}
-          push_options: '--force'
