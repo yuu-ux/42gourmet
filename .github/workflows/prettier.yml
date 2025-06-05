@@ -35,4 +35,4 @@ jobs:
         with:
           commit_message: Apply Prettier Change
           branch: ${{ github.head_ref }}
-          push_options: '--force'
+          create_branch: true
