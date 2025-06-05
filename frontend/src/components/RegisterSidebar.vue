@@ -193,9 +193,9 @@ const registerStore = async () => {
     selectedPlace.value = null;
     searchQuery.value = "";
     searchResults.value = [];
-    genre.value = "";
-    reason.value = "";
-    price.value = "";
+    genre.value = null;
+    reason.value = null;
+    price.value = null;
   } catch (error) {
     console.error("📡 店舗登録エラー:", error.message, error.stack);
     alert("登録に失敗しました: " + error.message);
