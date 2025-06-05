@@ -1,0 +1,36 @@
+name: Prettier
+
+on:
+  pull_request:
+
+env:
+  FILE_PATTERN: "{src,__tests__}/**/*.js"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'yarn'
+
+      - name: Fetch base branch
+        run: git fetch origin ${{ github.base_ref }}
+
+      - name: Run Prettier on changed files
+        run: |
+          yarn install
+          git diff --name-only origin/${{ github.base_ref }}...HEAD \
+            | grep -E '\.(js|jsx|ts|tsx)$' \
+            | tee changed_files.txt
+          if [ -s changed_files.txt ]; then
+            cat changed_files.txt | xargs yarn prettier --write
+          fi
+
+      - uses: stefanzweifel/git-auto-commit-action@v3.0.0
+        if: github.actor != 'github-actions[bot]'
+        with:
+          commit_message: Apply Prettier Change
