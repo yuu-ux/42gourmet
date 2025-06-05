@@ -1,5 +1,5 @@
-import mysql from 'mysql2/promise';
-import dotenv from 'dotenv';
+import mysql from "mysql2/promise";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -14,33 +14,36 @@ export const connectDB = async () => {
   while (retries < maxRetries) {
     try {
       pool = mysql.createPool({
-        host: process.env.DB_HOST || 'localhost',
-        user: process.env.DB_USER || 'root',
+        host: process.env.DB_HOST || "localhost",
+        user: process.env.DB_USER || "root",
         port: process.env.DB_PORT || 23306,
-        password: process.env.DB_PASSWORD || 'password',
-        database: process.env.DB_NAME || 'gourmet',
+        password: process.env.DB_PASSWORD || "password",
+        database: process.env.DB_NAME || "gourmet",
         waitForConnections: true,
         connectionLimit: 10,
-        queueLimit: 0
+        queueLimit: 0,
       });
 
-      console.log('データベース接続プールが作成されました');
+      console.log("データベース接続プールが作成されました");
 
       await initDatabase();
       return;
     } catch (error) {
       lastError = error;
       retries++;
-      console.error(`データベース接続に失敗しました (${retries}/${maxRetries}):`, error);
+      console.error(
+        `データベース接続に失敗しました (${retries}/${maxRetries}):`,
+        error,
+      );
 
       if (retries < maxRetries) {
-        console.log(`${retryDelay/1000}秒後に再試行します...`);
-        await new Promise(resolve => setTimeout(resolve, retryDelay));
+        console.log(`${retryDelay / 1000}秒後に再試行します...`);
+        await new Promise((resolve) => setTimeout(resolve, retryDelay));
       }
     }
   }
 
-  console.error('最大再試行回数を超えました。データベース接続に失敗しました');
+  console.error("最大再試行回数を超えました。データベース接続に失敗しました");
   throw lastError;
 };
 
@@ -77,9 +80,9 @@ export const initDatabase = async () => {
       )
     `);
 
-    console.log('テーブルが初期化されました');
+    console.log("テーブルが初期化されました");
   } catch (error) {
-    console.error('テーブル初期化エラー:', error);
+    console.error("テーブル初期化エラー:", error);
     throw error;
   }
 };
