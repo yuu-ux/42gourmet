@@ -20,15 +20,16 @@ jobs:
       - name: Fetch base branch
         run: git fetch origin ${{ github.base_ref }}
 
-      - name: Run Prettier on changed files
-        run: |
-          yarn install
-          git diff --name-only origin/${{ github.base_ref }}...HEAD \
-            | grep -E '\.(js|jsx|ts|tsx)$' \
-            | tee changed_files.txt
-          if [ -s changed_files.txt ]; then
-            cat changed_files.txt | xargs yarn prettier --write
-          fi
+- name: Get changed files and run Prettier
+  run: |
+    git fetch origin ${{ github.base_ref }}
+    git diff --name-only origin/${{ github.base_ref }}...HEAD \
+      | grep -E '\.(js|jsx|ts|tsx)$' \
+      | tee changed_files.txt
+    if [ -s changed_files.txt ]; then
+      cat changed_files.txt | xargs npx prettier --write
+    fi
+
 
       - uses: stefanzweifel/git-auto-commit-action@v3.0.0
         if: github.actor != 'github-actions[bot]'
