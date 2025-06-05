@@ -11,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.head_ref }}
 
       - uses: actions/setup-node@v3
         with:
@@ -36,4 +34,3 @@ jobs:
         if: github.actor != 'github-actions[bot]'
         with:
           commit_message: Apply Prettier Change
-          ref: ${{ github.head_ref }}
