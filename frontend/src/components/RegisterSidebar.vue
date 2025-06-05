@@ -78,9 +78,9 @@ const searchQuery = ref("");
 const searchResults = ref([]);
 const selectedPlace = ref(null);
 
-const genre = ref("");
-const reason = ref("");
-const price = ref("");
+const genre = ref(null);
+const reason = ref(null);
+const price = ref(null);
 
 const genreOptions = [
   "和食",
@@ -222,62 +222,76 @@ function convertTo24Hour(timeStr, suffix) {
 }
 
 const parseOpeningHours = (weekdayText) => {
-  const validDays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  const result = [];
+  try {
+    if (!Array.isArray(weekdayText)) {
+      console.warn("Invalid weekdayText format:", weekdayText);
+      return [];
+    }
 
-  for (const entry of weekdayText) {
-    const normalizedEntry = entry
-      .replace(/[\u202F\u2009\u00A0]/g, " ")
-      .replace(/[–—ー−]/g, "-")
-      .replace(/\s*-\s*/g, "-")
-      .replace(/\s+/g, " ")
-      .trim();
+    const validDays = [
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+    ];
+    const result = [];
 
-    const match = normalizedEntry.match(/^([A-Za-z]+):\s*(.+)$/);
-    if (!match) continue;
-
-    const dayString = match[1];
-    const timeRanges = match[2];
-    if (!validDays.includes(dayString)) continue;
-    if (timeRanges.toLowerCase().includes("closed")) continue;
-
-    const ranges = timeRanges.split(",").map((r) => r.trim());
-
-    for (const range of ranges) {
-      const timeMatch = range.match(
-        /(\d{1,2}:\d{2})(?:\s*(AM|PM))?-(\d{1,2}:\d{2})(?:\s*(AM|PM))?/i,
-      );
-      if (!timeMatch) {
-        console.warn("⛔ 不明な時間形式:", range);
+    for (const entry of weekdayText) {
+      if (typeof entry !== "string") {
+        console.warn("Invalid entry format:", entry);
         continue;
       }
+      const normalizedEntry = entry
+        .replace(/[\u202F\u2009\u00A0]/g, " ")
+        .replace(/[–—ー−]/g, "-")
+        .replace(/\s*-\s*/g, "-")
+        .replace(/\s+/g, " ")
+        .trim();
 
-      let [, open, openSuffix, close, closeSuffix] = timeMatch;
+      const match = normalizedEntry.match(/^([A-Za-z]+):\s*(.+)$/);
+      if (!match) continue;
 
-      if (!openSuffix && closeSuffix) openSuffix = closeSuffix;
-      if (!closeSuffix && openSuffix) closeSuffix = openSuffix;
-      if (!openSuffix && !closeSuffix) openSuffix = closeSuffix = "AM";
+      const dayString = match[1];
+      const timeRanges = match[2];
+      if (!validDays.includes(dayString)) continue;
+      if (timeRanges.toLowerCase().includes("closed")) continue;
 
-      const openTime = convertTo24Hour(open, openSuffix);
-      const closeTime = convertTo24Hour(close, closeSuffix);
+      const ranges = timeRanges.split(",").map((r) => r.trim());
 
-      result.push({
-        day_of_week: dayString,
-        open_time: openTime,
-        close_time: closeTime,
-      });
+      for (const range of ranges) {
+        const timeMatch = range.match(
+          /(\d{1,2}:\d{2})(?:\s*(AM|PM))?-(\d{1,2}:\d{2})(?:\s*(AM|PM))?/i,
+        );
+        if (!timeMatch) {
+          console.warn("⛔ 不明な時間形式:", range);
+          continue;
+        }
+
+        let [, open, openSuffix, close, closeSuffix] = timeMatch;
+
+        if (!openSuffix && closeSuffix) openSuffix = closeSuffix;
+        if (!closeSuffix && openSuffix) closeSuffix = openSuffix;
+        if (!openSuffix && !closeSuffix) openSuffix = closeSuffix = "AM";
+
+        const openTime = convertTo24Hour(open, openSuffix);
+        const closeTime = convertTo24Hour(close, closeSuffix);
+
+        result.push({
+          day_of_week: dayString,
+          open_time: openTime,
+          close_time: closeTime,
+        });
+      }
     }
-  }
 
-  console.log("▶ parseOpeningHours result:", result);
-  return result;
+    console.log("▶ parseOpeningHours result:", result);
+    return result;
+  } catch (e) {
+    console.error("parseOpeningHours で例外:", e);
+    return [];
+  }
 };
 </script>
