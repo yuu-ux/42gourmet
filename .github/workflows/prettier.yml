@@ -4,30 +4,41 @@ on:
   pull_request:
 
 env:
-  FILE_PATTERN: "{src,__tests__}/**/*.{js,jsx,ts,tsx}"
+  FILE_PATTERN: '\.js$|\.jsx$|\.ts$|\.tsx$'
 
 jobs:
   lint:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
 
       - uses: actions/setup-node@v3
         with:
           node-version: 20
           cache: 'yarn'
 
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
       - name: Get changed files and run Prettier
         run: |
           git fetch origin ${{ github.base_ref }}
           git diff --name-only origin/${{ github.base_ref }}...HEAD \
-            | grep -E '\.js$|\.jsx$|\.ts$|\.tsx$' \
+            | grep -E "${{ env.FILE_PATTERN }}" \
             | tee changed_files.txt
           if [ -s changed_files.txt ]; then
             cat changed_files.txt | xargs npx prettier --write
           fi
 
-      - uses: stefanzweifel/git-auto-commit-action@v3.0.0
+      - name: Commit Prettier changes
+        uses: stefanzweifel/git-auto-commit-action@v3
         if: github.actor != 'github-actions[bot]'
         with:
           commit_message: Apply Prettier Change
