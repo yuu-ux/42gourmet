@@ -5,3 +5,4 @@ backend/dist
 .vscode
 backend/public
 .env
+**/node_modules/
