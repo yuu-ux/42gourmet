@@ -4,7 +4,7 @@ on:
   pull_request:
 
 env:
-  FILE_PATTERN: "{src,__tests__}/**/*.js"
+  FILE_PATTERN: "{src,__tests__}/**/*.{js,jsx,ts,tsx}"
 
 jobs:
   lint:
@@ -17,14 +17,11 @@ jobs:
           node-version: 20
           cache: 'yarn'
 
-      - name: Fetch base branch
-        run: git fetch origin ${{ github.base_ref }}
-
       - name: Get changed files and run Prettier
         run: |
           git fetch origin ${{ github.base_ref }}
           git diff --name-only origin/${{ github.base_ref }}...HEAD \
-            | grep -E '\.(js|jsx|ts|tsx)$' \
+            | grep -E '\.js$|\.jsx$|\.ts$|\.tsx$' \
             | tee changed_files.txt
           if [ -s changed_files.txt ]; then
             cat changed_files.txt | xargs npx prettier --write
@@ -35,4 +32,3 @@ jobs:
         with:
           commit_message: Apply Prettier Change
           branch: ${{ github.head_ref }}
-          create_branch: true
