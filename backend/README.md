@@ -11,6 +11,7 @@ Fastify と MySQL を使用したレストラン情報 API サーバー
 ## データベース構造
 
 ### stores テーブル
+
 - id - VARCHAR(255) PRIMARY KEY
 - name - VARCHAR(255) NOT NULL
 - address - VARCHAR(500)
@@ -21,6 +22,7 @@ Fastify と MySQL を使用したレストラン情報 API サーバー
 - reason - TEXT
 
 ### store_operation_hours テーブル
+
 - id - INT AUTO_INCREMENT PRIMARY KEY
 - store_id - VARCHAR(255) (stores テーブルの id を参照する外部キー)
 - day_of_week - ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
@@ -44,6 +46,7 @@ cp .env.example .env
 
 MySQL データベースを用意し、.env ファイルに接続情報を設定してください。
 デフォルトでは、以下の接続情報が使用されます：
+
 - ホスト: localhost
 - ユーザー: root
 - パスワード: password
@@ -102,10 +105,12 @@ backend/
 ## トラブルシューティング
 
 ### データベース接続エラー
+
 - 環境変数が正しく設定されているか確認してください
 - MySQL サーバーが起動しているか確認してください
 
 ### API エラー
+
 - サーバーログを確認してエラーの詳細を確認してください
 - データベースにサンプルデータが挿入されているか確認してください：
   ```bash
@@ -113,4 +118,5 @@ backend/
   ```
 
 ### ポートが既に使用されている場合
+
 - 異なるポートを .env ファイルで指定するか、既存のプロセスを終了してください
