@@ -47,7 +47,7 @@ cp .env.example .env
 MySQL データベースを用意し、.env ファイルに接続情報を設定してください。
 デフォルトでは、以下の接続情報が使用されます：
 
-- ホスト: localhost
+- ホスト: db
 - ユーザー: root
 - パスワード: password
 - データベース: gourmet
