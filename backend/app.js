@@ -5,7 +5,6 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import storeRoutes from './routes/store.route.js';
 import { connectDB } from './db/mysql.js';
 import staticPlugin from './plugin/static.js';
-import fp from 'fastify-plugin';
 
 const app = Fastify({
     logger: true,
