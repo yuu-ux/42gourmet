@@ -5,10 +5,12 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend:/app
-      - /app/node_modules
       - ./backend/public:/app/dist
     environment:
       - NODE_ENV=development
+      - NODE_PATH=/opt/app
+      - PATH=/opt/app/node_modules/.bin:$PATH
+    tty: true
     depends_on:
       - backend
 
@@ -18,17 +20,13 @@ services:
       - "3000:3000"
     volumes:
       - ./backend:/app
-      - /app/node_modules
     environment:
       - NODE_ENV=development
-      - DB_HOST=db
-      - DB_PORT=23306
-      - DB_USER=root
-      - DB_PASSWORD=password
-      - DB_NAME=gourmet
-      - PORT=3000
+      - NODE_PATH=/opt/app
+    tty: true
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: mysql:8.0
@@ -42,6 +40,12 @@ services:
     volumes:
       - db-data:/var/lib/mysql
       - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    healthcheck:
+      test: "mysqladmin ping -h127.0.0.1 -uroot -ppassword -P23306"
+      timeout: 3s
+      interval: 5s
+      retries: 10
+      start_period: 10s
 
 volumes:
   db-data:
