@@ -8,7 +8,6 @@ services:
       - ./backend/public:/app/dist
     environment:
       - NODE_ENV=development
-      - NODE_PATH=/opt/app
       - PATH=/opt/app/node_modules/.bin:$PATH
     tty: true
     depends_on:
@@ -44,8 +43,8 @@ services:
       test: "mysqladmin ping -h127.0.0.1 -uroot -ppassword -P23306"
       timeout: 3s
       interval: 5s
-      retries: 10
-      start_period: 10s
+      retries: 15
+      start_period: 30s
 
 volumes:
   db-data:
