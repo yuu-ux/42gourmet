@@ -1,0 +1,290 @@
+{
+  "東京都庁": [
+    "Monday: 8:30 AM – 5:00 PM",
+    "Tuesday: 8:30 AM – 5:00 PM",
+    "Wednesday: 8:30 AM – 5:00 PM",
+    "Thursday: 8:30 AM – 5:00 PM",
+    "Friday: 8:30 AM – 5:00 PM",
+    "Saturday: Closed",
+    "Sunday: Closed"
+  ],
+  "創始麺屋武蔵": [
+    "Monday: 11:00 AM – 10:00 PM",
+    "Tuesday: 11:00 AM – 10:00 PM",
+    "Wednesday: 11:00 AM – 10:00 PM",
+    "Thursday: 11:00 AM – 10:00 PM",
+    "Friday: 11:00 AM – 10:00 PM",
+    "Saturday: 11:00 AM – 10:00 PM",
+    "Sunday: 11:00 AM – 10:00 PM"
+  ],
+  "カレーハウス CoCo壱番屋 西新宿五丁目駅前通店": [
+    "Monday: 11:00 AM – 12:00 AM",
+    "Tuesday: 11:00 AM – 12:00 AM",
+    "Wednesday: 11:00 AM – 12:00 AM",
+    "Thursday: 11:00 AM – 12:00 AM",
+    "Friday: 11:00 AM – 12:00 AM",
+    "Saturday: 11:00 AM – 12:00 AM",
+    "Sunday: 11:00 AM – 12:00 AM"
+  ],
+  "もうやんカレー西新宿大忍具店": [
+    "Monday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Tuesday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Wednesday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Thursday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Friday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Saturday: Closed",
+    "Sunday: Closed"
+  ],
+  "肉そば家 笑梟（ふくろう）西新宿": [
+    "Monday: 11:00 AM – 3:00 PM, 5:00 – 9:00 PM",
+    "Tuesday: 11:00 AM – 3:00 PM, 5:00 – 9:00 PM",
+    "Wednesday: 11:00 AM – 3:00 PM, 5:00 – 9:00 PM",
+    "Thursday: 11:00 AM – 3:00 PM, 5:00 – 9:00 PM",
+    "Friday: 11:00 AM – 3:00 PM",
+    "Saturday: 11:00 AM – 3:00 PM, 5:00 – 9:00 PM",
+    "Sunday: 11:00 AM – 3:00 PM"
+  ],
+  "松屋 西新宿店": [
+    "Monday: Open 24 hours",
+    "Tuesday: Open 24 hours",
+    "Wednesday: Open 24 hours",
+    "Thursday: Open 24 hours",
+    "Friday: Open 24 hours",
+    "Saturday: Open 24 hours",
+    "Sunday: Open 24 hours"
+  ],
+  "The MEALS アジアンダイニング ザ ミールス 西新宿店": [
+    "Monday: 10:30 AM – 1:00 AM",
+    "Tuesday: 10:30 AM – 1:00 AM",
+    "Wednesday: 10:30 AM – 1:00 AM",
+    "Thursday: 10:30 AM – 1:00 AM",
+    "Friday: 10:30 AM – 1:00 AM",
+    "Saturday: 10:30 AM – 1:00 AM",
+    "Sunday: 10:30 AM – 1:00 AM"
+  ],
+  "らぁ麺や 嶋": [
+    "Monday: 8:45 AM – 2:00 PM",
+    "Tuesday: 8:45 AM – 2:00 PM",
+    "Wednesday: 8:45 AM – 2:00 PM",
+    "Thursday: 8:45 AM – 2:00 PM",
+    "Friday: 8:45 AM – 2:00 PM",
+    "Saturday: Closed",
+    "Sunday: Closed"
+  ],
+  "毎日カオマンガイ 新宿店": [
+    "Monday: 11:00 AM – 3:00 PM, 5:30 – 9:00 PM",
+    "Tuesday: 11:00 AM – 3:00 PM, 5:30 – 9:00 PM",
+    "Wednesday: 11:00 AM – 3:00 PM, 5:30 – 9:00 PM",
+    "Thursday: 11:00 AM – 3:00 PM, 5:30 – 9:00 PM",
+    "Friday: 11:00 AM – 3:00 PM, 5:30 – 9:00 PM",
+    "Saturday: 11:00 AM – 3:00 PM, 5:30 – 9:00 PM",
+    "Sunday: 11:00 AM – 3:00 PM, 5:30 – 9:00 PM"
+  ],
+  "ひじり屋 西新宿店": [
+    "Monday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Tuesday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Wednesday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Thursday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Friday: 11:30 AM – 3:00 PM, 6:00 – 11:00 PM",
+    "Saturday: 11:30 AM – 2:00 PM, 6:00 – 10:00 PM",
+    "Sunday: Closed"
+  ],
+  "あるでん亭 新宿住友ビル店": [
+    "Monday: 11:00 AM – 9:00 PM",
+    "Tuesday: 11:00 AM – 9:00 PM",
+    "Wednesday: 11:00 AM – 9:00 PM",
+    "Thursday: 11:00 AM – 9:00 PM",
+    "Friday: 11:00 AM – 9:00 PM",
+    "Saturday: 11:00 AM – 9:00 PM",
+    "Sunday: 11:00 AM – 8:00 PM"
+  ],
+  "屋台DELi 小田急第一生命ビル店": [
+    "Monday: 11:00 AM – 2:00 PM",
+    "Tuesday: 11:00 AM – 2:00 PM",
+    "Wednesday: 11:00 AM – 2:00 PM",
+    "Thursday: 11:00 AM – 2:00 PM",
+    "Friday: 11:00 AM – 2:00 PM",
+    "Saturday: Closed",
+    "Sunday: Closed"
+  ],
+  "しゅぞう": [
+    "Monday: 5:30 – 10:30 PM",
+    "Tuesday: 5:30 – 10:30 PM",
+    "Wednesday: 11:30 AM – 2:00 PM, 5:30 – 10:30 PM",
+    "Thursday: 11:30 AM – 2:00 PM, 5:30 – 10:30 PM",
+    "Friday: 11:30 AM – 2:00 PM, 5:30 – 10:30 PM",
+    "Saturday: Closed",
+    "Sunday: Closed"
+  ],
+  "豚山 幡ヶ谷店": [
+    "Monday: 11:00 AM – 1:00 AM",
+    "Tuesday: 11:00 AM – 1:00 AM",
+    "Wednesday: 11:00 AM – 1:00 AM",
+    "Thursday: 11:00 AM – 1:00 AM",
+    "Friday: 11:00 AM – 1:00 AM",
+    "Saturday: 11:00 AM – 1:00 AM",
+    "Sunday: 11:00 AM – 1:00 AM"
+  ],
+  "Spice Bazaar アチャカナ": [
+    "Monday: Closed",
+    "Tuesday: 11:30 AM – 2:30 PM, 5:30 – 10:00 PM",
+    "Wednesday: 11:30 AM – 2:30 PM, 5:30 – 10:00 PM",
+    "Thursday: 11:30 AM – 2:30 PM, 5:30 – 10:00 PM",
+    "Friday: 11:30 AM – 2:30 PM, 5:30 – 10:00 PM",
+    "Saturday: 11:30 AM – 2:30 PM, 5:00 – 10:00 PM",
+    "Sunday: Closed"
+  ],
+  "馬鹿うま 西新宿本店": [
+    "Monday: 11:30 AM – 2:00 PM, 6:00 – 10:30 PM",
+    "Tuesday: 11:30 AM – 2:00 PM, 6:00 PM – 1:00 AM",
+    "Wednesday: 11:30 AM – 2:00 PM, 6:00 PM – 1:00 AM",
+    "Thursday: 11:30 AM – 2:00 PM, 6:00 PM – 1:00 AM",
+    "Friday: 11:30 AM – 2:00 PM, 6:00 PM – 1:00 AM",
+    "Saturday: 11:30 AM – 2:00 PM, 6:00 PM – 1:00 AM",
+    "Sunday: 11:30 AM – 2:00 PM, 6:00 PM – 1:00 AM"
+  ],
+  "中華料理 華盛楼": [
+    "Monday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+    "Tuesday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+    "Wednesday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+    "Thursday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+    "Friday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+    "Saturday: 11:00 AM – 3:00 PM, 5:00 – 10:00 PM",
+    "Sunday: Closed"
+  ],
+  "居酒屋いくなら俺んち来る？宴会部 新宿店": [
+    "Monday: 5:00 PM – 5:00 AM",
+    "Tuesday: 5:00 PM – 5:00 AM",
+    "Wednesday: 5:00 PM – 5:00 AM",
+    "Thursday: 5:00 PM – 5:00 AM",
+    "Friday: 5:00 PM – 5:00 AM",
+    "Saturday: 5:00 PM – 5:00 AM",
+    "Sunday: 5:00 PM – 5:00 AM"
+  ],
+  "やまと": [
+    "Monday: 4:00 PM – 12:00 AM",
+    "Tuesday: 4:00 PM – 12:00 AM",
+    "Wednesday: 4:00 PM – 12:00 AM",
+    "Thursday: 4:00 PM – 12:00 AM",
+    "Friday: 4:00 PM – 1:00 AM",
+    "Saturday: 3:00 PM – 1:00 AM",
+    "Sunday: 3:00 PM – 12:00 AM"
+  ],
+  "立呑み晩杯屋 新宿思い出横丁": [
+    "Monday: 7:00 AM – 12:00 AM",
+    "Tuesday: 7:00 AM – 12:00 AM",
+    "Wednesday: 7:00 AM – 12:00 AM",
+    "Thursday: 7:00 AM – 12:00 AM",
+    "Friday: 7:00 AM – 12:00 AM",
+    "Saturday: 7:00 AM – 12:00 AM",
+    "Sunday: 7:00 AM – 12:00 AM"
+  ],
+  "コーヒーショップ ～Arcobaleno Caffe&Bar Tokyo～": [
+    "Monday: Closed",
+    "Tuesday: Closed",
+    "Wednesday: 11:00 AM – 10:00 PM",
+    "Thursday: 11:00 AM – 10:00 PM",
+    "Friday: 11:00 AM – 10:00 PM",
+    "Saturday: 11:00 AM – 8:00 PM",
+    "Sunday: 11:00 AM – 8:00 PM"
+  ],
+  "炭火屋 もり平": [
+    "Monday: 11:00 AM – 2:00 PM, 5:30 – 10:45 PM",
+    "Tuesday: 11:00 AM – 2:00 PM, 5:30 – 10:45 PM",
+    "Wednesday: 11:00 AM – 2:00 PM, 5:30 – 10:45 PM",
+    "Thursday: 11:00 AM – 2:00 PM, 5:30 – 10:45 PM",
+    "Friday: 11:00 AM – 2:00 PM, 5:30 – 11:00 PM",
+    "Saturday: 11:00 AM – 2:00 PM, 5:30 – 10:00 PM",
+    "Sunday: Closed"
+  ],
+  "新時代 新宿西口大ガード店": [
+    "Monday: 4:00 PM – 5:00 AM",
+    "Tuesday: 4:00 PM – 5:00 AM",
+    "Wednesday: 4:00 PM – 5:00 AM",
+    "Thursday: 4:00 PM – 5:00 AM",
+    "Friday: 4:00 PM – 5:00 AM",
+    "Saturday: 1:00 PM – 5:00 AM",
+    "Sunday: 1:00 PM – 5:00 AM"
+  ],
+  "SpiceCurry FIFTY": [
+    "Monday: 11:00 AM – 3:30 PM",
+    "Tuesday: 11:00 AM – 3:30 PM",
+    "Wednesday: 11:00 AM – 3:30 PM",
+    "Thursday: 11:00 AM – 3:30 PM",
+    "Friday: 11:00 AM – 3:30 PM",
+    "Saturday: 11:00 AM – 3:30 PM",
+    "Sunday: 11:00 AM – 5:00 PM"
+  ],
+  "KOME TO COFFEE": [
+    "Monday: 11:00 AM – 3:30 PM",
+    "Tuesday: 11:00 AM – 3:30 PM",
+    "Wednesday: 11:00 AM – 3:30 PM",
+    "Thursday: 11:00 AM – 3:30 PM",
+    "Friday: 11:00 AM – 3:30 PM",
+    "Saturday: 11:00 AM – 4:30 PM",
+    "Sunday: 11:00 AM – 4:30 PM"
+  ],
+  "麺家たいせい": [
+    "Monday: 11:00 AM – 9:00 PM",
+    "Tuesday: 11:00 AM – 9:00 PM",
+    "Wednesday: 11:00 AM – 9:00 PM",
+    "Thursday: 11:00 AM – 9:00 PM",
+    "Friday: 11:00 AM – 9:00 PM",
+    "Saturday: 11:00 AM – 9:00 PM",
+    "Sunday: 11:00 AM – 9:00 PM"
+  ],
+  "酒膳 穂のほまれ 西新宿店": [
+    "Monday: 11:30 AM – 11:00 PM",
+    "Tuesday: 11:30 AM – 2:00 PM, 5:00 – 11:00 PM",
+    "Wednesday: 11:30 AM – 2:00 PM, 5:00 – 11:00 PM",
+    "Thursday: 11:30 AM – 2:00 PM, 5:00 – 11:00 PM",
+    "Friday: 11:30 AM – 2:00 PM, 5:00 – 11:00 PM",
+    "Saturday: 12:00 – 10:00 PM",
+    "Sunday: 12:00 – 10:00 PM"
+  ],
+  "鶏Dining&Bar Goto": [
+    "Monday: 11:30 AM – 2:00 PM, 6:00 – 10:30 PM",
+    "Tuesday: 11:30 AM – 2:00 PM, 6:00 – 10:30 PM",
+    "Wednesday: 11:30 AM – 2:00 PM, 6:00 – 10:30 PM",
+    "Thursday: 11:30 AM – 2:00 PM, 6:00 – 10:30 PM",
+    "Friday: 11:30 AM – 2:00 PM, 6:00 – 10:30 PM",
+    "Saturday: 6:00 – 10:30 PM",
+    "Sunday: Closed"
+  ],
+  "天吉屋 新宿店": [
+    "Monday: 11:00 AM – 2:00 PM, 5:30 – 8:30 PM",
+    "Tuesday: 11:00 AM – 2:00 PM, 5:30 – 8:30 PM",
+    "Wednesday: 11:00 AM – 2:00 PM, 5:30 – 8:30 PM",
+    "Thursday: 11:00 AM – 2:00 PM, 5:30 – 8:30 PM",
+    "Friday: 11:00 AM – 2:00 PM, 5:30 – 8:30 PM",
+    "Saturday: 11:00 AM – 2:00 PM, 5:30 – 8:30 PM",
+    "Sunday: Closed"
+  ],
+  "天秀": [
+    "Monday: 11:30 AM – 1:30 PM, 5:00 – 10:00 PM",
+    "Tuesday: 11:30 AM – 1:30 PM, 5:00 – 10:00 PM",
+    "Wednesday: 11:30 AM – 1:30 PM, 5:00 – 10:00 PM",
+    "Thursday: 11:30 AM – 1:30 PM, 5:00 – 10:00 PM",
+    "Friday: 11:30 AM – 1:30 PM, 5:00 – 10:00 PM",
+    "Saturday: 5:00 – 10:00 PM",
+    "Sunday: Closed"
+  ],
+  "中華そば 流川": [
+    "Monday: 11:30 AM – 11:00 PM",
+    "Tuesday: 11:30 AM – 11:00 PM",
+    "Wednesday: 11:30 AM – 11:00 PM",
+    "Thursday: 11:30 AM – 11:00 PM",
+    "Friday: 11:30 AM – 11:00 PM",
+    "Saturday: 11:30 AM – 11:00 PM",
+    "Sunday: 11:30 AM – 11:00 PM"
+  ],
+  "MORETHAN BAKERY Shinjuku": [
+    "Monday: 8:00 AM – 6:00 PM",
+    "Tuesday: 8:00 AM – 6:00 PM",
+    "Wednesday: 8:00 AM – 6:00 PM",
+    "Thursday: 8:00 AM – 6:00 PM",
+    "Friday: 8:00 AM – 6:00 PM",
+    "Saturday: 8:00 AM – 6:00 PM",
+    "Sunday: 8:00 AM – 6:00 PM"
+  ]
+}
