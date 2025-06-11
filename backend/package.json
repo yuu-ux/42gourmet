@@ -1,11 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "app.js",
   "type": "module",
   "scripts": {
-    "start": "node index.js",
-    "dev": "node --watch index.js",
+    "start": "node app.js",
+    "dev": "node --watch app.js",
     "seed": "node seeds/seed.js"
   },
   "keywords": [],

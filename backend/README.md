@@ -87,7 +87,6 @@ API ドキュメントは起動後に以下の URL で確認できます：
 ```
 backend/
 ├── app.js                     - Fastify アプリケーション設定
-├── index.js                   - サーバー起動エントリーポイント
 ├── /db/
 │   └── mysql.js               - データベース接続
 ├── /routes/
