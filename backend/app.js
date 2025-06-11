@@ -36,12 +36,12 @@ app.setErrorHandler((error, request, reply) => {
     reply.code(500).send({ error: 'サーバーエラーが発生しました' });
 });
 
-connectDB();
 
 (async () => {
     try {
-        const PORT = process.env.PORT;
-        const HOST = process.env.HOST;
+        await connectDB();
+        const PORT = process.env.PORT || 3000;
+        const HOST = process.env.HOST || '0.0.0.0';
 
         await app.listen({ port: PORT, host: HOST });
         console.log(`サーバーが起動しました: http://${HOST}:${PORT}`);
