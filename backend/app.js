@@ -5,7 +5,6 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import storeRoutes from './routes/store.route.js';
 import { connectDB } from './db/mysql.js';
 import staticPlugin from './plugin/static.js';
-import fp from 'fastify-plugin';
 
 const app = Fastify({
     logger: true,
@@ -37,7 +36,8 @@ app.setErrorHandler((error, request, reply) => {
     reply.code(500).send({ error: 'サーバーエラーが発生しました' });
 });
 
-export const startServer = async () => {
+
+(async () => {
     try {
         await connectDB();
         const PORT = process.env.PORT || 3000;
@@ -49,6 +49,6 @@ export const startServer = async () => {
         app.log.error(err);
         process.exit(1);
     }
-};
+})();
 
 export default app;
