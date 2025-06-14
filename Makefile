@@ -5,7 +5,7 @@ REGION = asia-northeast1
 
 # Vueビルド
 build:
-	docker compose run --rm frontend npm run build
+	docker compose exec frontend npm run build
 
 # Cloud Run へデプロイ
 deploy: build
