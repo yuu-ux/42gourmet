@@ -42,7 +42,7 @@ const getOperateHours = async (placeId) => {
         );
 
         const data = await res.json();
-        return data.regularOpeningHours.weekdayDescriptions;
+        return data.regularOpeningHours?.weekdayDescriptions ?? null;
     } catch (err) {
         console.error('エラー', err);
         return null;
