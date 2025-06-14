@@ -23,7 +23,6 @@ export const connectDB = async () => {
                 waitForConnections: true,
                 connectionLimit: 10,
                 queueLimit: 0,
-                multipleStatements: true,
             });
 
             console.log('データベース接続プールが作成されました');
@@ -59,7 +58,18 @@ export const initDatabase = async () => {
     try {
         // TODO ファイルパス定数にする
         const ddl = await readFile('/app/db/create_table.ddl', 'utf-8');
-        await pool.query(ddl);
+
+        const statements = ddl
+            .split(/(?=CREATE TABLE)/i)
+            .map((stmt) => stmt.trim())
+            .filter((stmt) => stmt.length > 0);
+
+        for (const statement of statements) {
+            if (statement.startsWith('CREATE TABLE')) {
+                await pool.query(statement);
+            }
+        }
+
         console.log('テーブルが初期化されました');
     } catch (error) {
         console.error('テーブル初期化エラー:', error);

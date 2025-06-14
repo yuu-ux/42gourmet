@@ -3,6 +3,10 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 const API_KEY = process.env.API_KEY;
+if (!API_KEY) {
+    console.error('API_KEY is not set in environment variables');
+    process.exit(1);
+}
 
 const getPlaceId = async (Text) => {
     try {
@@ -93,10 +97,15 @@ const storeHours = {};
         const operateHours = await getOperateHours(placeId);
         storeHours[store] = operateHours;
     }
-    console.log(storeHours);
-    fs.writeFileSync(
-        'store_hours.json',
-        JSON.stringify(storeHours, null, 2),
-        'utf-8'
-    );
+    try {
+        fs.writeFileSync(
+            'store_hours.json',
+            JSON.stringify(storeHours, null, 2),
+            'utf-8'
+        );
+        console.log('Successfully wrote store hours to store_hours.json');
+    } catch (err) {
+        console.error('Failed to write store hours file:', err);
+        process.exit(1);
+    }
 })();

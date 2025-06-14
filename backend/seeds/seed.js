@@ -2,6 +2,7 @@ import { getConnection, initDatabase } from '../db/mysql.js';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'csv-parse/sync';
 import { set } from 'date-fns';
+import { normalize } from 'node:path';
 
 const HOURS_IN_HALF_DAY = 12;
 
@@ -35,6 +36,7 @@ const getStores = async (csvFileName) => {
         return stores;
     } catch (err) {
         console.error(err);
+        process.exit(1);
     }
 };
 
@@ -48,7 +50,13 @@ const normalizeTime = (time) => {
     hour = Number(hour);
     let [minutes, meridian] = minutesAndMeridian.split(/\s+/);
     if (!meridian) meridian = 'PM';
-    if (meridian == 'PM') hour += HOURS_IN_HALF_DAY;
+    // 12:00 AM が深夜12 時
+    // 12:00 PM が正午
+    if (meridian === 'PM' && hour !== 12) {
+        hour += HOURS_IN_HALF_DAY;
+    }  else if (meridian === 'AM' && hour === 12) {
+        hour = 0;
+    }
     const base = new Date();
     const res = set(base, {
         hours: hour,
@@ -103,6 +111,7 @@ const getStoreOperationHours = async (fileName, stores) => {
         return storeOperationHours;
     } catch (err) {
         console.error(err);
+        process.exit(1);
     }
 };
 
@@ -147,12 +156,20 @@ const seedDatabase = async (stores, storeOperationHours) => {
         return;
     } catch (err) {
         console.log(err);
+        process.exit(1);
     }
 };
 
-const stores = await getStores('stores.csv');
-const storeOperationHours = await getStoreOperationHours(
-    'store_hours.json',
-    stores
-);
-seedDatabase(stores, storeOperationHours);
+(async () => {
+    try {
+        const stores = await getStores('stores.csv');
+        const storeOperationHours = await getStoreOperationHours(
+            'store_hours.json',
+            stores
+        );
+        await seedDatabase(stores, storeOperationHours);
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+})();
