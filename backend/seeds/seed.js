@@ -38,6 +38,7 @@ const getStores = async (csvFileName) => {
     }
 }
 
+// TODO
 // Closed
 // 24 時間営業みたいなやつ対応
 const normalizeTime = (time) => {
