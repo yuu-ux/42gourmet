@@ -9,4 +9,4 @@ RUN mkdir -p /opt/app && cp -a /tmp/node_modules /opt/app
 COPY . .
 EXPOSE 3000
 
-CMD [ "node", "app.js" ]
+CMD ["sh", "-c", "ln -s /opt/app/node_modules /app/node_modules && node app.js"]
