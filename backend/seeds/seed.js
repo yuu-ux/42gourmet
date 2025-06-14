@@ -10,14 +10,14 @@ const getStores = async (csvFileName) => {
         const fileContent = await readFile(csvFileName, 'utf8');
         const records = parse(fileContent, {
             columns: true,
-            skip_empty_lines: true
+            skip_empty_lines: true,
         });
 
         // archive 以外のカラムを取り出す
         // ↓分割代入
         // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Destructuring
         // map((records, index))
-        const cleanedStores = records.map(({ archive, ...rest}) => rest);
+        const cleanedStores = records.map(({ archive, ...rest }) => rest);
         // インデックスをふる
         // () でくくることでオブジェクトがそのまま帰る
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
@@ -36,42 +36,47 @@ const getStores = async (csvFileName) => {
     } catch (err) {
         console.error(err);
     }
-}
+};
 
 // TODO
 // Closed
 // 24 時間営業みたいなやつ対応
 const normalizeTime = (time) => {
-    if (!time) return ;
+    if (!time) return;
     let [hour, minutesAndMeridian] = time.split(':');
-    if (!minutesAndMeridian) return ;
+    if (!minutesAndMeridian) return;
     hour = Number(hour);
     let [minutes, meridian] = minutesAndMeridian.split(/\s+/);
     if (!meridian) meridian = 'PM';
     if (meridian == 'PM') hour += HOURS_IN_HALF_DAY;
     const base = new Date();
-    const res = set(base, { hours: hour, minutes: minutes, seconds: 0, milliseconds: 0 });
+    const res = set(base, {
+        hours: hour,
+        minutes: minutes,
+        seconds: 0,
+        milliseconds: 0,
+    });
     return res.toLocaleTimeString('en-GB');
-}
+};
 
 const parseHours = (line) => {
     const [dayOfWeek, times] = line.split(': ');
-    const timeRanges = times.split(',').map(t => t.trim());
+    const timeRanges = times.split(',').map((t) => t.trim());
 
     const result = [];
 
     for (const range of timeRanges) {
         const [open, close] = range.split('–');
-        if (!close) continue ;
+        if (!close) continue;
 
         result.push({
             day_of_week: dayOfWeek,
             open_time: normalizeTime(open),
             close_time: normalizeTime(close),
-        })
+        });
     }
     return result;
-}
+};
 
 const getStoreOperationHours = async (fileName, stores) => {
     try {
@@ -87,13 +92,11 @@ const getStoreOperationHours = async (fileName, stores) => {
             for (const hour of weeklyHours) {
                 const dailyTimeRanges = parseHours(hour);
                 for (const timeRange of dailyTimeRanges) {
-                    storeOperationHours.push(
-                        {
-                            id: id++,
-                            store_id: store.id,
-                            ...timeRange,
-                        }
-                    )
+                    storeOperationHours.push({
+                        id: id++,
+                        store_id: store.id,
+                        ...timeRange,
+                    });
                 }
             }
         }
@@ -101,7 +104,7 @@ const getStoreOperationHours = async (fileName, stores) => {
     } catch (err) {
         console.error(err);
     }
-}
+};
 
 const seedDatabase = async (stores, storeOperationHours) => {
     try {
@@ -124,7 +127,7 @@ const seedDatabase = async (stores, storeOperationHours) => {
                     store.reason,
                 ]
             );
-        };
+        }
 
         for (const storeOperationHour of storeOperationHours) {
             await pool.query(
@@ -138,15 +141,18 @@ const seedDatabase = async (stores, storeOperationHours) => {
                     storeOperationHour.close_time,
                 ]
             );
-        };
+        }
         console.log('マイグレーションに成功しました');
         await pool.end();
-        return ;
+        return;
     } catch (err) {
         console.log(err);
     }
-}
+};
 
 const stores = await getStores('stores.csv');
-const storeOperationHours = await getStoreOperationHours('store_hours.json', stores);
+const storeOperationHours = await getStoreOperationHours(
+    'store_hours.json',
+    stores
+);
 seedDatabase(stores, storeOperationHours);
