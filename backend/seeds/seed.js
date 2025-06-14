@@ -1,4 +1,4 @@
-// import { connectDB, getConnection } from '../db/mysql.js';
+import { getConnection, initDatabase } from '../db/mysql.js';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'csv-parse/sync';
 import { set } from 'date-fns';
@@ -23,8 +23,13 @@ const getStores = async (csvFileName) => {
         // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
         const stores = cleanedStores.map((record, index) => ({
             id: index + 1,
+            name: record.name,
+            address: record.address,
+            price_level: record.price_level,
+            latitude: parseFloat(record.latitude),
+            longitude: parseFloat(record.longitude),
             genre: 'japan',
-            ...record
+            reason: JSON.stringify({}),
         }));
 
         return stores;
@@ -33,6 +38,8 @@ const getStores = async (csvFileName) => {
     }
 }
 
+// Closed
+// 24 時間営業みたいなやつ対応
 const normalizeTime = (time) => {
     if (!time) return ;
     let [hour, minutesAndMeridian] = time.split(':');
@@ -54,6 +61,7 @@ const parseHours = (line) => {
 
     for (const range of timeRanges) {
         const [open, close] = range.split('–');
+        if (!close) continue ;
 
         result.push({
             day_of_week: dayOfWeek,
@@ -93,63 +101,51 @@ const getStoreOperationHours = async (fileName, stores) => {
         console.error(err);
     }
 }
+
+const seedDatabase = async (stores, storeOperationHours) => {
+    try {
+        const pool = await getConnection();
+        await initDatabase();
+        await pool.query('TRUNCATE TABLE store_operation_hours');
+        await pool.query('DELETE FROM stores');
+        for (const store of stores) {
+            await pool.query(
+                `INSERT INTO stores (id, name, address, price_level, latitude, longitude, genre, reason)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                [
+                    store.id,
+                    store.name,
+                    store.address,
+                    store.price_level,
+                    store.latitude,
+                    store.longitude,
+                    store.genre,
+                    store.reason,
+                ]
+            );
+        };
+
+        for (const storeOperationHour of storeOperationHours) {
+            await pool.query(
+                `INSERT INTO store_operation_hours (id, store_id, day_of_week, open_time, close_time)
+                 VALUES (?, ?, ?, ?, ?)`,
+                [
+                    storeOperationHour.id,
+                    storeOperationHour.store_id,
+                    storeOperationHour.day_of_week,
+                    storeOperationHour.open_time,
+                    storeOperationHour.close_time,
+                ]
+            );
+        };
+        console.log('マイグレーションに成功しました');
+        await pool.end();
+        return ;
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 const stores = await getStores('stores.csv');
 const storeOperationHours = await getStoreOperationHours('store_hours.json', stores);
-
-    // const seedDatabase = async () => {
-        //     try {
-            //         await connectDB();
-            //         const connection = await getConnection();
-            //
-                //         console.log('データベースのシードを開始します...');
-            //
-                //         // テーブルをクリア
-            //         await connection.query('TRUNCATE TABLE store_operation_hours');
-            //         await connection.query('DELETE FROM stores');
-            //         console.log('既存のデータを削除しました');
-            //
-                //         // レストランデータを挿入
-            //         for (const store of sampleStores) {
-                //             await connection.query(
-                    //                 `INSERT INTO stores (id, name, address, price_level, latitude, longitude, genre, reason)
-                    //          VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                    //                 [
-                        //                     store.id,
-                        //                     store.name,
-                        //                     store.address,
-                        //                     store.price_level,
-                        //                     store.latitude,
-                        //                     store.longitude,
-                        //                     store.genre,
-                        //                     store.reason,
-                        //                 ]
-                    //             );
-                //         }
-            //         console.log(`${sampleStores.length}件のレストランデータを挿入しました`);
-            //
-                //         // 営業時間データを挿入
-            //         for (const hour of sampleOperationHours) {
-                //             await connection.query(
-                    //                 `INSERT INTO store_operation_hours (store_id, day_of_week, open_time, close_time)
-                    //          VALUES (?, ?, ?, ?)`,
-                    //                 [
-                        //                     hour.store_id,
-                        //                     hour.day_of_week,
-                        //                     hour.open_time,
-                        //                     hour.close_time,
-                        //                 ]
-                    //             );
-                //         }
-            //         console.log(
-                //             `${sampleOperationHours.length}件の営業時間データを挿入しました`
-                //         );
-            //
-                //         console.log('データベースのシードが完了しました');
-            //         process.exit(0);
-            //     } catch (error) {
-                //         console.error('シード処理中にエラーが発生しました:', error);
-                //         process.exit(1);
-                //     }
-        // };
-//
-    // seedDatabase();
+seedDatabase(stores, storeOperationHours);

@@ -28,7 +28,6 @@ export const connectDB = async () => {
 
             console.log('データベース接続プールが作成されました');
 
-            await initDatabase();
             return;
         } catch (error) {
             lastError = error;
@@ -58,6 +57,7 @@ export const initDatabase = async () => {
     const pool = await getConnection();
 
     try {
+        // TODO ファイルパス定数にする
         const ddl = await readFile('/app/db/create_table.ddl', 'utf-8');
         await pool.query(ddl);
         console.log('テーブルが初期化されました');

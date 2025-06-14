@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS stores (
     -- 2: "501~999",
     -- 3: "1000~1500",
     -- 4: "1501~",
-    latitude     DECIMAL(10, 8) NOT NULL                                                            COMMENT '店舗の緯度',
+    latitude     DECIMAL(11, 8) NOT NULL                                                            COMMENT '店舗の緯度',
     longitude    DECIMAL(11, 8) NOT NULL                                                            COMMENT '店舗の経度',
     genre        VARCHAR(255) NOT NULL                                                              COMMENT '店舗のジャンル',
     reason       JSON                                                                               COMMENT 'おすすめの理由',
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS stores (
 CREATE TABLE IF NOT EXISTS store_operation_hours (
     id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY                                   COMMENT 'ID',
     store_id     INT UNSIGNED NOT NULL                                                              COMMENT '店舗ID',
-    day_of_week  ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') COMMENT '曜日',
+    day_of_week  VARCHAR(255) NOT NULL                                                              COMMENT '曜日',
     open_time    TIME NOT NULL                                                                      COMMENT '開店時間',
     close_time   TIME NOT NULL                                                                      COMMENT '閉店時間',
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP                                        COMMENT '作成日時',
