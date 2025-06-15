@@ -7,8 +7,18 @@ import { connectDB } from './db/mysql.js';
 import staticPlugin from './plugin/static.js';
 
 const app = Fastify({
-    logger: true,
+  logger: {
+    transport: {
+      target: 'pino-pretty',
+      options: {
+        colorize: true,
+        translateTime: 'SYS:standard',
+        ignore: 'pid,hostname',
+      },
+    },
+  },
 });
+
 await app.register(cors, {
     origin: true,
     credentials: true,
