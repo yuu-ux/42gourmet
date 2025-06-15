@@ -2,7 +2,6 @@ import { getConnection, initDatabase } from '../db/mysql.js';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'csv-parse/sync';
 import { set } from 'date-fns';
-import { normalize } from 'node:path';
 
 const HOURS_IN_HALF_DAY = 12;
 
