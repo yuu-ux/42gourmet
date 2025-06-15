@@ -1,285 +1,130 @@
-import { connectDB, getConnection } from '../db/mysql.js';
+import { getConnection, initDatabase } from '../db/mysql.js';
+import { readFile } from 'node:fs/promises';
+import { parse } from 'csv-parse/sync';
+import { set, format } from 'date-fns';
 
-const sampleStores = [
-    {
-        id: '1',
-        name: '六本木焼肉 Kintan',
-        address: '東京都港区六本木６丁目１−８ 六本木グリーンビル 2F',
-        price_level: 3,
-        latitude: 35.6604,
-        longitude: 139.73,
-        genre: 'japanese',
-        reason: '高品質な焼肉を提供する人気店',
-    },
-    {
-        id: '2',
-        name: '俺の創作らぁめん 極 神田神保町店',
-        address: '東京都千代田区神田神保町１丁目４−６',
-        price_level: 2,
-        latitude: 35.6961,
-        longitude: 139.757,
-        genre: 'japanese',
-        reason: '創作ラーメンが楽しめるお店',
-    },
-    {
-        id: '3',
-        name: '麺匠大宮はなび',
-        address: '東京都千代田区神田小川町３丁目６−１０',
-        price_level: 2,
-        latitude: 35.6965,
-        longitude: 139.7612,
-        genre: 'japanese',
-        reason: 'うどん食べ放題が魅力',
-    },
-    {
-        id: '4',
-        name: 'らーめん谷瀬家',
-        address: '東京都港区新橋３丁目１１−１',
-        price_level: 2,
-        latitude: 35.6663,
-        longitude: 139.7578,
-        genre: 'japanese',
-        reason: '家系ラーメンの名店',
-    },
-    {
-        id: '5',
-        name: 'もうやんカレー 西新宿リビング店',
-        address: '東京都新宿区西新宿６丁目５−１',
-        price_level: 3,
-        latitude: 35.6938,
-        longitude: 139.6921,
-        genre: 'indian',
-        reason: 'スパイスカレーのビュッフェが人気',
-    },
-];
+const HOURS_IN_HALF_DAY = 12;
 
-const sampleOperationHours = [
-    // 六本木焼肉 Kintan (id: 1)
-    {
-        store_id: '1',
-        day_of_week: 'Monday',
-        open_time: '11:30',
-        close_time: '23:00',
-    },
-    {
-        store_id: '1',
-        day_of_week: 'Tuesday',
-        open_time: '11:30',
-        close_time: '23:00',
-    },
-    {
-        store_id: '1',
-        day_of_week: 'Wednesday',
-        open_time: '11:30',
-        close_time: '23:00',
-    },
-    {
-        store_id: '1',
-        day_of_week: 'Thursday',
-        open_time: '11:30',
-        close_time: '23:00',
-    },
-    {
-        store_id: '1',
-        day_of_week: 'Friday',
-        open_time: '11:30',
-        close_time: '23:00',
-    },
-    {
-        store_id: '1',
-        day_of_week: 'Saturday',
-        open_time: '11:30',
-        close_time: '23:00',
-    },
-    {
-        store_id: '1',
-        day_of_week: 'Sunday',
-        open_time: '11:30',
-        close_time: '23:00',
-    },
-
-    // 俺の創作らぁめん 極 神田神保町店 (id: 2)
-    {
-        store_id: '2',
-        day_of_week: 'Monday',
-        open_time: '11:00',
-        close_time: '22:00',
-    },
-    {
-        store_id: '2',
-        day_of_week: 'Tuesday',
-        open_time: '11:00',
-        close_time: '22:00',
-    },
-    {
-        store_id: '2',
-        day_of_week: 'Wednesday',
-        open_time: '11:00',
-        close_time: '22:00',
-    },
-    {
-        store_id: '2',
-        day_of_week: 'Thursday',
-        open_time: '11:00',
-        close_time: '22:00',
-    },
-    {
-        store_id: '2',
-        day_of_week: 'Friday',
-        open_time: '11:00',
-        close_time: '22:00',
-    },
-    {
-        store_id: '2',
-        day_of_week: 'Saturday',
-        open_time: '11:00',
-        close_time: '22:00',
-    },
-    {
-        store_id: '2',
-        day_of_week: 'Sunday',
-        open_time: '11:00',
-        close_time: '22:00',
-    },
-
-    // 麺匠大宮はなび (id: 3)
-    {
-        store_id: '3',
-        day_of_week: 'Monday',
-        open_time: '11:00',
-        close_time: '21:00',
-    },
-    {
-        store_id: '3',
-        day_of_week: 'Tuesday',
-        open_time: '11:00',
-        close_time: '21:00',
-    },
-    {
-        store_id: '3',
-        day_of_week: 'Wednesday',
-        open_time: '11:00',
-        close_time: '21:00',
-    },
-    {
-        store_id: '3',
-        day_of_week: 'Thursday',
-        open_time: '11:00',
-        close_time: '21:00',
-    },
-    {
-        store_id: '3',
-        day_of_week: 'Friday',
-        open_time: '11:00',
-        close_time: '21:00',
-    },
-    {
-        store_id: '3',
-        day_of_week: 'Saturday',
-        open_time: '11:00',
-        close_time: '21:00',
-    },
-    {
-        store_id: '3',
-        day_of_week: 'Sunday',
-        open_time: '11:00',
-        close_time: '21:00',
-    },
-
-    // らーめん谷瀬家 (id: 4)
-    {
-        store_id: '4',
-        day_of_week: 'Monday',
-        open_time: '11:00',
-        close_time: '23:00',
-    },
-    {
-        store_id: '4',
-        day_of_week: 'Tuesday',
-        open_time: '11:00',
-        close_time: '23:00',
-    },
-    {
-        store_id: '4',
-        day_of_week: 'Wednesday',
-        open_time: '11:00',
-        close_time: '23:00',
-    },
-    {
-        store_id: '4',
-        day_of_week: 'Thursday',
-        open_time: '11:00',
-        close_time: '23:00',
-    },
-    {
-        store_id: '4',
-        day_of_week: 'Friday',
-        open_time: '11:00',
-        close_time: '23:00',
-    },
-    {
-        store_id: '4',
-        day_of_week: 'Saturday',
-        open_time: '11:00',
-        close_time: '23:00',
-    },
-    {
-        store_id: '4',
-        day_of_week: 'Sunday',
-        open_time: '11:00',
-        close_time: '23:00',
-    },
-
-    // もうやんカレー 西新宿リビング店 (id: 5)
-    {
-        store_id: '5',
-        day_of_week: 'Monday',
-        open_time: '11:30',
-        close_time: '15:00',
-    },
-    {
-        store_id: '5',
-        day_of_week: 'Tuesday',
-        open_time: '11:30',
-        close_time: '15:00',
-    },
-    {
-        store_id: '5',
-        day_of_week: 'Wednesday',
-        open_time: '11:30',
-        close_time: '15:00',
-    },
-    {
-        store_id: '5',
-        day_of_week: 'Thursday',
-        open_time: '11:30',
-        close_time: '15:00',
-    },
-    {
-        store_id: '5',
-        day_of_week: 'Friday',
-        open_time: '11:30',
-        close_time: '15:00',
-    },
-];
-
-const seedDatabase = async () => {
+const getStores = async (csvFileName) => {
     try {
-        await connectDB();
-        const connection = await getConnection();
+        const fileContent = await readFile(csvFileName, 'utf8');
+        const records = parse(fileContent, {
+            columns: true,
+            skip_empty_lines: true,
+        });
 
-        console.log('データベースのシードを開始します...');
+        // archive 以外のカラムを取り出す
+        // ↓分割代入
+        // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Destructuring
+        // map((records, index))
+        const cleanedStores = records.map(({ archive, ...rest }) => rest);
+        // インデックスをふる
+        // () でくくることでオブジェクトがそのまま帰る
+        // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions
+        const stores = cleanedStores.map((record, index) => ({
+            id: index + 1,
+            name: record.name,
+            address: record.address,
+            price_level: record.price_level,
+            latitude: parseFloat(record.latitude),
+            longitude: parseFloat(record.longitude),
+            genre: 'japan',
+            reason: JSON.stringify([1, 2]),
+        }));
 
-        // テーブルをクリア
-        await connection.query('TRUNCATE TABLE store_operation_hours');
-        await connection.query('DELETE FROM stores');
-        console.log('既存のデータを削除しました');
+        return stores;
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+};
 
-        // レストランデータを挿入
-        for (const store of sampleStores) {
-            await connection.query(
+// TODO
+// Closed
+// 24 時間営業みたいなやつ対応
+const normalizeTime = (time) => {
+    if (!time) return;
+    let [hour, minutesAndMeridian] = time.split(':');
+    if (!minutesAndMeridian) return;
+    hour = Number(hour);
+    let [minutes, meridian] = minutesAndMeridian.split(/\s+/);
+    if (!meridian) meridian = 'PM';
+    // 12:00 AM が深夜12 時
+    // 12:00 PM が正午
+    if (meridian === 'PM' && hour !== 12) {
+        hour += HOURS_IN_HALF_DAY;
+    } else if (meridian === 'AM' && hour === 12) {
+        hour = 0;
+    }
+    const base = new Date();
+    const res = set(base, {
+        hours: hour,
+        minutes: minutes,
+        seconds: 0,
+        milliseconds: 0,
+    });
+    return format(res, 'HH:mm:ss');
+};
+
+const parseHours = (line) => {
+    const [dayOfWeek, times] = line.split(': ');
+    const timeRanges = times.split(',').map((t) => t.trim());
+
+    const result = [];
+
+    for (const range of timeRanges) {
+        const [open, close] = range.split('–');
+        if (!close) continue;
+
+        result.push({
+            day_of_week: dayOfWeek,
+            open_time: normalizeTime(open),
+            close_time: normalizeTime(close),
+        });
+    }
+    return result;
+};
+
+const getStoreOperationHours = async (fileName, stores) => {
+    try {
+        const storeHoursData = await readFile(fileName, 'utf8');
+        const storeHoursJson = JSON.parse(storeHoursData);
+
+        const storeOperationHours = [];
+        let id = 1;
+
+        for (const store of stores) {
+            const weeklyHours = storeHoursJson[store.name];
+            if (!weeklyHours) continue;
+            for (const hour of weeklyHours) {
+                const dailyTimeRanges = parseHours(hour);
+                for (const timeRange of dailyTimeRanges) {
+                    storeOperationHours.push({
+                        id: id++,
+                        store_id: store.id,
+                        ...timeRange,
+                    });
+                }
+            }
+        }
+        return storeOperationHours;
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+};
+
+const seedDatabase = async (stores, storeOperationHours) => {
+    try {
+        const pool = await getConnection();
+        await initDatabase();
+        await pool.query('TRUNCATE TABLE store_operation_hours');
+        await pool.query('DELETE FROM stores');
+        await pool.query('TRUNCATE TABLE master_reason');
+        for (const store of stores) {
+            await pool.query(
                 `INSERT INTO stores (id, name, address, price_level, latitude, longitude, genre, reason)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     store.id,
                     store.name,
@@ -292,31 +137,55 @@ const seedDatabase = async () => {
                 ]
             );
         }
-        console.log(`${sampleStores.length}件のレストランデータを挿入しました`);
 
-        // 営業時間データを挿入
-        for (const hour of sampleOperationHours) {
-            await connection.query(
-                `INSERT INTO store_operation_hours (store_id, day_of_week, open_time, close_time)
-         VALUES (?, ?, ?, ?)`,
+        for (const storeOperationHour of storeOperationHours) {
+            await pool.query(
+                `INSERT INTO store_operation_hours (id, store_id, day_of_week, open_time, close_time)
+                 VALUES (?, ?, ?, ?, ?)`,
                 [
-                    hour.store_id,
-                    hour.day_of_week,
-                    hour.open_time,
-                    hour.close_time,
+                    storeOperationHour.id,
+                    storeOperationHour.store_id,
+                    storeOperationHour.day_of_week,
+                    storeOperationHour.open_time,
+                    storeOperationHour.close_time,
                 ]
             );
         }
-        console.log(
-            `${sampleOperationHours.length}件の営業時間データを挿入しました`
-        );
 
-        console.log('データベースのシードが完了しました');
-        process.exit(0);
-    } catch (error) {
-        console.error('シード処理中にエラーが発生しました:', error);
+        const reasonList = [
+            'コスパが良い',
+            '提供が早い',
+            '味が最高',
+            '栄養満点',
+        ];
+
+        await Promise.all(
+            reasonList.map((reason, i) =>
+                pool.query(
+                    `INSERT INTO master_reason (id, name) VALUES (?, ?)`,
+                    [i + 1, reason]
+                )
+            )
+        );
+        console.log('マイグレーションに成功しました');
+        await pool.end();
+        return;
+    } catch (err) {
+        console.log(err);
         process.exit(1);
     }
 };
 
-seedDatabase();
+(async () => {
+    try {
+        const stores = await getStores('stores.csv');
+        const storeOperationHours = await getStoreOperationHours(
+            'store_hours.json',
+            stores
+        );
+        await seedDatabase(stores, storeOperationHours);
+    } catch (err) {
+        console.error(err);
+        process.exit(1);
+    }
+})();
