@@ -154,19 +154,19 @@ const seedDatabase = async (stores, storeOperationHours) => {
         }
 
         const reasonList = [
-            "コスパが良い",
-            "提供が早い",
-            "味が最高",
-            "栄養満点",
-        ]
+            'コスパが良い',
+            '提供が早い',
+            '味が最高',
+            '栄養満点',
+        ];
 
         await Promise.all(
-          reasonList.map((reason, i) =>
-            pool.query(
-              `INSERT INTO master_reason (id, name) VALUES (?, ?)`,
-              [i + 1, reason]
+            reasonList.map((reason, i) =>
+                pool.query(
+                    `INSERT INTO master_reason (id, name) VALUES (?, ?)`,
+                    [i + 1, reason]
+                )
             )
-          )
         );
         console.log('マイグレーションに成功しました');
         await pool.end();
