@@ -54,7 +54,7 @@ const normalizeTime = (time) => {
     // 12:00 PM が正午
     if (meridian === 'PM' && hour !== 12) {
         hour += HOURS_IN_HALF_DAY;
-    }  else if (meridian === 'AM' && hour === 12) {
+    } else if (meridian === 'AM' && hour === 12) {
         hour = 0;
     }
     const base = new Date();
