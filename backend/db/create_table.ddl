@@ -11,7 +11,14 @@ CREATE TABLE IF NOT EXISTS stores (
     latitude     DECIMAL(11, 8) NOT NULL                                                            COMMENT '店舗の緯度',
     longitude    DECIMAL(11, 8) NOT NULL                                                            COMMENT '店舗の経度',
     genre        TINYINT NOT NULL                                                                   COMMENT '店舗のジャンル',
+    -- 1: 和食
+    -- 2: 中華
+    -- 3: 洋食
+    -- 4: アジアン
+    -- 5: カフェ
+    -- 6: 居酒屋
     reason       JSON                                                                               COMMENT 'おすすめの理由',
+    -- データベースに入れる時は [1, 2, 3, 4] のような形式になる
     -- [1: "コスパが良い", 2: "提供が早い", 3: "味が最高", 4: "栄養満点"]
     created_at   DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP                                        COMMENT '作成日時',
     modified_at  TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP           COMMENT '更新日時'

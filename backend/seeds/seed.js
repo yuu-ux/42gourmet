@@ -1,7 +1,7 @@
 import { getConnection, initDatabase } from '../db/mysql.js';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'csv-parse/sync';
-import { set } from 'date-fns';
+import { set, format } from 'date-fns';
 
 const HOURS_IN_HALF_DAY = 12;
 
@@ -53,7 +53,7 @@ const normalizeTime = (time) => {
     // 12:00 PM が正午
     if (meridian === 'PM' && hour !== 12) {
         hour += HOURS_IN_HALF_DAY;
-    }  else if (meridian === 'AM' && hour === 12) {
+    } else if (meridian === 'AM' && hour === 12) {
         hour = 0;
     }
     const base = new Date();
@@ -63,7 +63,7 @@ const normalizeTime = (time) => {
         seconds: 0,
         milliseconds: 0,
     });
-    return res.toLocaleTimeString('en-GB');
+    return format(res, 'HH:mm:ss');
 };
 
 const parseHours = (line) => {
