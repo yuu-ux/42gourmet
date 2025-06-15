@@ -1,8 +1,7 @@
 import { getConnection, initDatabase } from '../db/mysql.js';
 import { readFile } from 'node:fs/promises';
 import { parse } from 'csv-parse/sync';
-import { set } from 'date-fns';
-import { normalize } from 'node:path';
+import { set, format } from 'date-fns';
 
 const HOURS_IN_HALF_DAY = 12;
 
@@ -64,7 +63,7 @@ const normalizeTime = (time) => {
         seconds: 0,
         milliseconds: 0,
     });
-    return res.toLocaleTimeString('en-GB');
+    return format(res, 'HH:mm:ss');
 };
 
 const parseHours = (line) => {
