@@ -29,7 +29,7 @@ const getStores = async (csvFileName) => {
             latitude: parseFloat(record.latitude),
             longitude: parseFloat(record.longitude),
             genre: 'japan',
-            reason: JSON.stringify({}),
+            reason: JSON.stringify([1, 2]),
         }));
 
         return stores;
@@ -120,6 +120,7 @@ const seedDatabase = async (stores, storeOperationHours) => {
         await initDatabase();
         await pool.query('TRUNCATE TABLE store_operation_hours');
         await pool.query('DELETE FROM stores');
+        await pool.query('TRUNCATE TABLE master_reason');
         for (const store of stores) {
             await pool.query(
                 `INSERT INTO stores (id, name, address, price_level, latitude, longitude, genre, reason)
@@ -150,6 +151,22 @@ const seedDatabase = async (stores, storeOperationHours) => {
                 ]
             );
         }
+
+        const reasonList = [
+            "コスパが良い",
+            "提供が早い",
+            "味が最高",
+            "栄養満点",
+        ]
+
+        await Promise.all(
+          reasonList.map((reason, i) =>
+            pool.query(
+              `INSERT INTO master_reason (id, name) VALUES (?, ?)`,
+              [i + 1, reason]
+            )
+          )
+        );
         console.log('マイグレーションに成功しました');
         await pool.end();
         return;
