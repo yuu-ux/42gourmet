@@ -14,7 +14,10 @@ import {
 } from '../schemas/store.schema.js';
 
 export default async (fastify) => {
-    fastify.get('/stores', async (request) => await findStores(request, request.query));
+    fastify.get(
+        '/stores',
+        async (request) => await findStores(request, request.query)
+    );
 
     fastify.get('/stores/:id', {
         schema: getStoreByIdSchema,
@@ -50,4 +53,4 @@ export default async (fastify) => {
             return updatedStore;
         },
     });
-}
+};
