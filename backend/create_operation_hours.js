@@ -23,6 +23,7 @@ const getPlaceId = async (Text) => {
             }
         );
 
+        if (!res.ok) throw new Error(`Google Places search failed: ${res.status} ${await res.text()}`);
         const data = await res.json();
         return data.places?.[0]?.id ?? null;
     } catch (err) {
