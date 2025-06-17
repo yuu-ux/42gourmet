@@ -5,6 +5,7 @@ import fastifySwaggerUi from '@fastify/swagger-ui';
 import storeRoutes from './routes/store.route.js';
 import { connectDB } from './db/mysql.js';
 import staticPlugin from './plugin/static.js';
+import { toZonedTime } from 'date-fns-tz';
 
 const app = Fastify({
   logger: {
@@ -17,6 +18,14 @@ const app = Fastify({
       },
     },
   },
+});
+
+app.addHook('onRequest', async (request) => {
+    const nowUTC = new Date();
+    const timeZone = 'Asia/Tokyo';
+    const nowJST = toZonedTime(nowUTC, timeZone);
+
+    request.now = nowJST;
 });
 
 await app.register(cors, {
