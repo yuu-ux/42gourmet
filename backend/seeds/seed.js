@@ -28,7 +28,7 @@ const getStores = async (csvFileName) => {
             price_level: record.price_level,
             latitude: parseFloat(record.latitude),
             longitude: parseFloat(record.longitude),
-            genre: 'japan',
+            genre: '1',
             reason: JSON.stringify([1, 2]),
         }));
 
