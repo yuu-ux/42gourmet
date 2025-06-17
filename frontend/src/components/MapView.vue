@@ -68,12 +68,12 @@ const formatPriceLevel = (level) =>
 
 const getMarkerIconByGenre = (genre) =>
   ({
-    和食: "https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png",
-    中華: "https://maps.gstatic.com/mapfiles/ms2/micons/yellow-dot.png",
-    洋食: "https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png",
-    アジアン: "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png",
-    カフェ: "https://maps.gstatic.com/mapfiles/ms2/micons/purple-dot.png",
-    居酒屋: "https://maps.gstatic.com/mapfiles/ms2/micons/orange-dot.png",
+    1: "https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png",
+    2: "https://maps.gstatic.com/mapfiles/ms2/micons/yellow-dot.png",
+    3: "https://maps.gstatic.com/mapfiles/ms2/micons/green-dot.png",
+    4: "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png",
+    5: "https://maps.gstatic.com/mapfiles/ms2/micons/purple-dot.png",
+    6: "https://maps.gstatic.com/mapfiles/ms2/micons/orange-dot.png",
   })[genre] ?? "https://maps.gstatic.com/mapfiles/ms2/micons/ltblue-dot.png";
 
 let mapsApiLoaded = false;
@@ -130,25 +130,9 @@ const addMarkers = () => {
 
   clearMarkers();
 
-  const filtered = stores.value.filter((store) => {
-    const openMatch = props.showOnlyOpen
-      ? isOpenNow(store.operation_hours)
-      : true;
-    const genreMatch = props.selectedGenre
-      ? store.genre === props.selectedGenre
-      : true;
-    const priceMatch = props.selectedPrice
-      ? formatPriceLevel(store.price_level) === props.selectedPrice
-      : true;
-    const reasonMatch = props.selectedReason
-      ? store.reason === props.selectedReason
-      : true;
-    return openMatch && genreMatch && priceMatch && reasonMatch;
-  });
-
-  filtered.forEach((store) => {
+  stores.value.forEach((store) => {
     const marker = new google.maps.Marker({
-      position: { lat: store.latitude, lng: store.longitude },
+      position: { lat: Number(store.latitude), lng: Number(store.longitude) },
       map: map.value,
       title: store.name,
       icon: {
