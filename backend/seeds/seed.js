@@ -25,10 +25,10 @@ const getStores = async (csvFileName) => {
             id: index + 1,
             name: record.name,
             address: record.address,
-            price_level: record.price_level,
-            latitude: parseFloat(record.latitude),
-            longitude: parseFloat(record.longitude),
-            genre: '1',
+            price_level: Number(record.price_level),
+            latitude: Number(record.latitude),
+            longitude: Number(record.longitude),
+            genre: 1,
             reason: JSON.stringify([1, 2]),
         }));
 
