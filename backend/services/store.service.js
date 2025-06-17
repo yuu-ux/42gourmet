@@ -1,20 +1,82 @@
 import {
-    findAllStores,
+    retrieveStores,
     findStoreById,
     createStore,
     deleteStore,
     updateStore,
 } from '../repositories/store.repository.js';
+import { set, format, addDays } from 'date-fns';
 
-export const getStores = async (queryParams = {}) => {
+
+export const findStores = async (request, queryParams = {}) => {
     const filters = {
         genre: queryParams.genre,
         price_level: queryParams.price_level,
-        latitude: queryParams.latitude,
-        longitude: queryParams.longitude,
+        reason: queryParams.reason,
     };
+    const stores = await retrieveStores(filters);
 
-    return await findAllStores(filters);
+    // 営業時間を整形する
+    // 曜日: [
+    //     {
+    //         open_time: ,
+    //         close_time: ,
+    //     },
+    //     {
+    //         open_time: ,
+    //         close_time,
+    //     }
+    // ]
+    for (const store of stores) {
+        const grouped = {};
+        for (const storeHours of store.store_operation_hours) {
+            const key = storeHours.day_of_week;
+            if (!grouped[key]) grouped[key] = [];
+
+            grouped[key].push({
+                open_time: storeHours.open_time,
+                close_time: storeHours.close_time,
+            });
+        }
+        store.store_operation_hours = grouped;
+    }
+
+    const DayOfWeek = format(request.now, 'EEEE');
+
+    const res = [];
+    // 営業時間判定
+    for (const store of stores) {
+        const hoursToday = store.store_operation_hours?.[DayOfWeek];
+
+        if (!hoursToday || hoursToday.length === 0) {
+            store.is_open = false;
+        } else {
+            const now = request.now
+            store.is_open = hoursToday.some(({ open_time, close_time }) => {
+                const _open_time = set(now, {
+                    hours: open_time.getHours(),
+                    minutes: open_time.getMinutes(),
+                    seconds: 0,
+                    milliseconds: 0,
+                });
+                let _close_time = set(now, {
+                    hours: close_time.getHours(),
+                    minutes: close_time.getMinutes(),
+                    seconds: 0,
+                    milliseconds: 0,
+                });
+                // 深夜営業を考慮
+                // 例：16:00〜05:00
+                if (_open_time > _close_time) {
+                    _close_time = addDays(_close_time, 1);
+                }
+                return (now >= _open_time && now <= _close_time);
+            });
+        }
+        const { store_operation_hours, created_at, modified_at, ...rest } = store;
+        res.push(rest);
+    }
+    return res;
 };
 
 export const getStoreById = async (id) => {
