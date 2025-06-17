@@ -8,16 +8,16 @@ import staticPlugin from './plugin/static.js';
 import { toZonedTime } from 'date-fns-tz';
 
 const app = Fastify({
-  logger: {
-    transport: {
-      target: 'pino-pretty',
-      options: {
-        colorize: true,
-        translateTime: 'SYS:standard',
-        ignore: 'pid,hostname',
-      },
+    logger: {
+        transport: {
+            target: 'pino-pretty',
+            options: {
+                colorize: true,
+                translateTime: 'SYS:standard',
+                ignore: 'pid,hostname',
+            },
+        },
     },
-  },
 });
 
 app.addHook('onRequest', async (request) => {
@@ -54,7 +54,6 @@ app.setErrorHandler((error, request, reply) => {
     request.log.error(error);
     reply.code(500).send({ error: 'サーバーエラーが発生しました' });
 });
-
 
 (async () => {
     try {

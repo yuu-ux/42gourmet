@@ -1,5 +1,5 @@
 import { getConnection } from '../db/mysql.js';
-import { prisma } from '../db/mysql.js'
+import { prisma } from '../db/mysql.js';
 
 export const retrieveStores = async (filters = {}) => {
     const stores = await prisma.stores.findMany({

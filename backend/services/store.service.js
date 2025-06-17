@@ -7,7 +7,6 @@ import {
 } from '../repositories/store.repository.js';
 import { set, format, addDays } from 'date-fns';
 
-
 export const findStores = async (request, queryParams = {}) => {
     const filters = {
         genre: queryParams.genre,
@@ -51,7 +50,7 @@ export const findStores = async (request, queryParams = {}) => {
         if (!hoursToday || hoursToday.length === 0) {
             store.is_open = false;
         } else {
-            const now = request.now
+            const now = request.now;
             store.is_open = hoursToday.some(({ open_time, close_time }) => {
                 const _open_time = set(now, {
                     hours: open_time.getHours(),
@@ -70,10 +69,11 @@ export const findStores = async (request, queryParams = {}) => {
                 if (_open_time > _close_time) {
                     _close_time = addDays(_close_time, 1);
                 }
-                return (now >= _open_time && now <= _close_time);
+                return now >= _open_time && now <= _close_time;
             });
         }
-        const { store_operation_hours, created_at, modified_at, ...rest } = store;
+        const { store_operation_hours, created_at, modified_at, ...rest } =
+            store;
         res.push(rest);
     }
     return res;
