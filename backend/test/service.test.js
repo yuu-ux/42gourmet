@@ -2,7 +2,6 @@ import { filterOpenStores } from '../services/store.service.js';
 import { describe, it, expect } from 'vitest';
 import { toZonedTime } from 'date-fns-tz';
 
-
 describe('filterOpenStores', () => {
     it('営業時間内の店舗のみ返す（昼）', async () => {
         const nowUTC = new Date('2025-06-18T15:00:00+09:00');
@@ -16,9 +15,15 @@ describe('filterOpenStores', () => {
                 store_operation_hours: [
                     {
                         day_of_week: 'Wednesday',
-                        open_time: toZonedTime(new Date('1970-01-01T12:00:00+09:00'), timeZone),
-                        close_time: toZonedTime(new Date('1970-01-01T16:00:00+09:00'), timeZone),
-                    }
+                        open_time: toZonedTime(
+                            new Date('1970-01-01T12:00:00+09:00'),
+                            timeZone
+                        ),
+                        close_time: toZonedTime(
+                            new Date('1970-01-01T16:00:00+09:00'),
+                            timeZone
+                        ),
+                    },
                 ],
             },
             {
@@ -27,9 +32,15 @@ describe('filterOpenStores', () => {
                 store_operation_hours: [
                     {
                         day_of_week: 'Wednesday',
-                        open_time: toZonedTime(new Date('1970-01-01T19:00:00+09:00'), timeZone),
-                        close_time: toZonedTime(new Date('1970-01-01T20:00:00+09:00'), timeZone),
-                    }
+                        open_time: toZonedTime(
+                            new Date('1970-01-01T19:00:00+09:00'),
+                            timeZone
+                        ),
+                        close_time: toZonedTime(
+                            new Date('1970-01-01T20:00:00+09:00'),
+                            timeZone
+                        ),
+                    },
                 ],
             },
         ];
@@ -40,7 +51,7 @@ describe('filterOpenStores', () => {
             {
                 id: 1,
                 name: '昼営業中の店',
-            }
+            },
         ]);
     });
 
@@ -56,13 +67,25 @@ describe('filterOpenStores', () => {
                 store_operation_hours: [
                     {
                         day_of_week: 'Tuesday',
-                        open_time: toZonedTime(new Date('1970-01-01T23:00:00+09:00'), timeZone),
-                        close_time: toZonedTime(new Date('1970-01-01T03:00:00+09:00'), timeZone),
+                        open_time: toZonedTime(
+                            new Date('1970-01-01T23:00:00+09:00'),
+                            timeZone
+                        ),
+                        close_time: toZonedTime(
+                            new Date('1970-01-01T03:00:00+09:00'),
+                            timeZone
+                        ),
                     },
                     {
                         day_of_week: 'Wednesday',
-                        open_time: toZonedTime(new Date('1970-01-01T23:00:00+09:00'), timeZone),
-                        close_time: toZonedTime(new Date('1970-01-01T03:00:00+09:00'), timeZone),
+                        open_time: toZonedTime(
+                            new Date('1970-01-01T23:00:00+09:00'),
+                            timeZone
+                        ),
+                        close_time: toZonedTime(
+                            new Date('1970-01-01T03:00:00+09:00'),
+                            timeZone
+                        ),
                     },
                 ],
             },
@@ -74,7 +97,7 @@ describe('filterOpenStores', () => {
             {
                 id: 3,
                 name: '深夜営業の店',
-            }
+            },
         ]);
     });
 
@@ -90,10 +113,16 @@ describe('filterOpenStores', () => {
                 store_operation_hours: [
                     {
                         day_of_week: 'Wednesday',
-                        open_time: toZonedTime(new Date('1970-01-01T00:00:00+09:00'), timeZone),
-                        close_time: toZonedTime(new Date('1970-01-01T00:00:00+09:00'), timeZone),
+                        open_time: toZonedTime(
+                            new Date('1970-01-01T00:00:00+09:00'),
+                            timeZone
+                        ),
+                        close_time: toZonedTime(
+                            new Date('1970-01-01T00:00:00+09:00'),
+                            timeZone
+                        ),
                     },
-                ]
+                ],
             },
         ];
 
@@ -103,7 +132,7 @@ describe('filterOpenStores', () => {
             {
                 id: 1,
                 name: '24時間営業の店舗',
-            }
+            },
         ]);
     });
 });

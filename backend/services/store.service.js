@@ -33,7 +33,7 @@ const convertStoreOperationHours = async (stores) => {
         }
         store.store_operation_hours = grouped;
     }
-}
+};
 
 export const filterOpenStores = async (stores, request) => {
     convertStoreOperationHours(stores);
@@ -44,7 +44,8 @@ export const filterOpenStores = async (stores, request) => {
 
     // 営業時間判定
     for (const store of stores) {
-        const hoursYesterday = store.store_operation_hours?.[DayOfWeekYesterDay] || [];
+        const hoursYesterday =
+            store.store_operation_hours?.[DayOfWeekYesterDay] || [];
         const hoursToday = store.store_operation_hours?.[DayOfWeekToday] || [];
         let is_open = false;
 
