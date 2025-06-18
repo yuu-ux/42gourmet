@@ -17,8 +17,8 @@ export const findStores = async (filters = {}) => {
                     day_of_week: true,
                     open_time: true,
                     close_time: true,
-                }
-            }
+                },
+            },
         },
     });
     return stores;
