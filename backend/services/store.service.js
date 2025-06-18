@@ -8,7 +8,7 @@ import {
 import { set, format, addDays, subDays, isBefore } from 'date-fns';
 import app from '../app.js';
 
-const SHIFT_TO_YESTERDAY = -1
+const SHIFT_TO_YESTERDAY = -1;
 
 const convertStoreOperationHours = (stores) => {
     // 営業時間を整形する
