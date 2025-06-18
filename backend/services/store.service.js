@@ -35,7 +35,13 @@ const convertStoreOperationHours = (stores) => {
     }
 };
 
-const isNowInOpenRange = (now, open_time, close_time, openShiftDays = 0, closeShiftDays = 0) => {
+const isNowInOpenRange = (
+    now,
+    open_time,
+    close_time,
+    openShiftDays = 0,
+    closeShiftDays = 0
+) => {
     let _open = set(addDays(now, openShiftDays), {
         hours: open_time.getHours(),
         minutes: open_time.getMinutes(),
