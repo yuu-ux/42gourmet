@@ -50,6 +50,8 @@ app.register(fastifySwaggerUi, {
 
 app.register(storeRoutes, { prefix: '/api' });
 
+// TODO
+// バリデーションエラーでも500エラーとして返してしまうため、適切にハンドリングする
 app.setErrorHandler((error, request, reply) => {
     request.log.error(error);
     reply.code(500).send({ error: 'サーバーエラーが発生しました' });
