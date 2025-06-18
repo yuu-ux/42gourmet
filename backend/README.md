@@ -29,6 +29,11 @@ Fastify と MySQL を使用したレストラン情報 API サーバー
   docker compose exec backend npx prisma generate
   ```
 
+  テスト
+  ```bash
+  npx vitest run
+  ```
+
 ### データベースの設定
 
 MySQL データベースを用意し、.env ファイルに接続情報を設定してください。
