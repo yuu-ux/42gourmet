@@ -65,7 +65,7 @@ const isNowInOpenRange = (
     return now >= _open && now <= _close;
 };
 
-export const filterOpenStores = async (stores, request) => {
+export const filterOpenStores = (stores, request) => {
     convertStoreOperationHours(stores);
 
     const now = request.now;
@@ -107,7 +107,7 @@ export const searchStores = async (request, queryParams = {}) => {
     let stores = await findStores(filters);
 
     if (filters?.is_open) {
-        stores = await filterOpenStores(stores, request);
+        stores = filterOpenStores(stores, request);
     }
 
     return stores.map(({ store_operation_hours, ...rest }) => rest);
