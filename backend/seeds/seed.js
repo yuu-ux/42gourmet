@@ -68,14 +68,22 @@ const normalizeTime = (time) => {
 
 const parseHours = (line) => {
     const [dayOfWeek, times] = line.split(': ');
+    if (times.includes('24')) {
+        return [
+            {
+                day_of_week: dayOfWeek,
+                open_time: format(set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0}), 'HH:mm:ss'),
+                close_time: format(set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0}), 'HH:mm:ss'),
+            }
+        ];
+    }
+    if (times.includes('Closed')) return [];
     const timeRanges = times.split(',').map((t) => t.trim());
 
     const result = [];
 
     for (const range of timeRanges) {
         const [open, close] = range.split('–');
-        if (!close) continue;
-
         result.push({
             day_of_week: dayOfWeek,
             open_time: normalizeTime(open),

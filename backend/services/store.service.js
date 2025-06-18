@@ -5,12 +5,10 @@ import {
     deleteStore,
     updateStore,
 } from '../repositories/store.repository.js';
-import { set, format, addDays } from 'date-fns';
+import { set, format, addDays, subDays, isBefore } from 'date-fns';
 import app from '../app.js';
 
-// TODO
-// 24時間営業を考慮
-const filterOpenStores = async (stores, request) => {
+const convertStoreOperationHours = async (stores) => {
     // 営業時間を整形する
     // 曜日: [
     //     {
@@ -35,41 +33,60 @@ const filterOpenStores = async (stores, request) => {
         }
         store.store_operation_hours = grouped;
     }
+}
 
-    const DayOfWeek = format(request.now, 'EEEE');
-
+export const filterOpenStores = async (stores, request) => {
+    convertStoreOperationHours(stores);
+    const now = request.now;
+    const DayOfWeekToday = format(now, 'EEEE');
+    const DayOfWeekYesterDay = format(subDays(now, 1), 'EEEE');
     const res = [];
+
     // 営業時間判定
     for (const store of stores) {
-        const hoursToday = store.store_operation_hours?.[DayOfWeek];
-        let is_open;
+        const hoursYesterday = store.store_operation_hours?.[DayOfWeekYesterDay] || [];
+        const hoursToday = store.store_operation_hours?.[DayOfWeekToday] || [];
+        let is_open = false;
 
-        if (!hoursToday || hoursToday.length === 0) {
-            is_open = false;
-        } else {
-            const now = request.now;
-            is_open = hoursToday.some(({ open_time, close_time }) => {
-                let _open_time = set(now, {
-                    hours: open_time.getHours(),
-                    minutes: open_time.getMinutes(),
-                    seconds: 0,
-                    milliseconds: 0,
-                });
-                let _close_time = set(now, {
-                    hours: close_time.getHours(),
-                    minutes: close_time.getMinutes(),
-                    seconds: 0,
-                    milliseconds: 0,
-                });
-                // 深夜営業を考慮
-                // 例：16:00〜05:00
-                if (_open_time >= _close_time) {
-                    if (now < _close_time) _open_time = addDays(_open_time, -1);
-                    _close_time = addDays(_close_time, 1);
-                }
-                return now >= _open_time && now <= _close_time;
+        // a ||= b は a がfalseの場合のみbを評価し代入する
+        // 今日の営業時間内であればtrueになる
+        // 違う場合前日の深夜営業をチェックする
+        is_open ||= hoursToday.some(({ open_time, close_time }) => {
+            const _open = set(now, {
+                hours: open_time.getHours(),
+                minutes: open_time.getMinutes(),
+                seconds: 0,
+                milliseconds: 0,
             });
-        }
+            let _close = set(now, {
+                hours: close_time.getHours(),
+                minutes: close_time.getMinutes(),
+                seconds: 0,
+                milliseconds: 0,
+            });
+
+            if (_close.getTime() === _open.getTime()) return true;
+            if (isBefore(_close, _open)) _close = addDays(_close, 1);
+
+            return now >= _open && now <= _close;
+        });
+
+        is_open ||= hoursYesterday.some(({ open_time, close_time }) => {
+            let _open = set(subDays(now, 1), {
+                hours: open_time.getHours(),
+                minutes: open_time.getMinutes(),
+                seconds: 0,
+                milliseconds: 0,
+            });
+            let _close = set(now, {
+                hours: close_time.getHours(),
+                minutes: close_time.getMinutes(),
+                seconds: 0,
+                milliseconds: 0,
+            });
+            return now >= _open && now <= _close;
+        });
+
         const { store_operation_hours, ...rest } = store;
         if (is_open) res.push(rest);
     }
