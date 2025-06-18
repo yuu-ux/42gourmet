@@ -49,7 +49,7 @@ const filterOpenStores = async (stores, request) => {
         } else {
             const now = request.now;
             is_open = hoursToday.some(({ open_time, close_time }) => {
-                const _open_time = set(now, {
+                let _open_time = set(now, {
                     hours: open_time.getHours(),
                     minutes: open_time.getMinutes(),
                     seconds: 0,
