@@ -8,6 +8,8 @@ import {
 import { set, format, addDays, subDays, isBefore } from 'date-fns';
 import app from '../app.js';
 
+const SHIFT_TO_YESTERDAY = -1
+
 const convertStoreOperationHours = (stores) => {
     // 営業時間を整形する
     // 曜日: [
@@ -87,8 +89,9 @@ export const filterOpenStores = (stores, request) => {
             isNowInOpenRange(now, open_time, close_time)
         );
 
+        // 深夜営業を考慮して昨日の営業時間内かどうかを確認したい
         is_open ||= hoursYesterday.some(({ open_time, close_time }) =>
-            isNowInOpenRange(now, open_time, close_time, -1, 0)
+            isNowInOpenRange(now, open_time, close_time, SHIFT_TO_YESTERDAY)
         );
 
         const { store_operation_hours, ...rest } = store;
