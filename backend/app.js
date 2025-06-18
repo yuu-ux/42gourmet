@@ -1,3 +1,4 @@
+import { fileURLToPath } from 'url';
 import Fastify from 'fastify';
 import cors from '@fastify/cors';
 import fastifySwagger from '@fastify/swagger';
@@ -57,18 +58,24 @@ app.setErrorHandler((error, request, reply) => {
     reply.code(500).send({ error: 'サーバーエラーが発生しました' });
 });
 
-(async () => {
-    try {
-        await connectDB();
-        const PORT = process.env.PORT || 3000;
-        const HOST = process.env.HOST || '0.0.0.0';
 
-        await app.listen({ port: PORT, host: HOST });
-        console.log(`サーバーが起動しました: http://${HOST}:${PORT}`);
-    } catch (err) {
-        app.log.error(err);
-        process.exit(1);
-    }
-})();
+// テストのときもサーバーがリッスンしてエラーが発生するため、
+// app.js が実行されたかどうか判定する
+const __filename = fileURLToPath(import.meta.url);
+if (process.argv[1] === __filename) {
+    (async () => {
+        try {
+            await connectDB();
+            const PORT = process.env.PORT || 3000;
+            const HOST = process.env.HOST || '0.0.0.0';
+
+            await app.listen({ port: PORT, host: HOST });
+            console.log(`サーバーが起動しました: http://${HOST}:${PORT}`);
+        } catch (err) {
+            app.log.error(err);
+            process.exit(1);
+        }
+    })();
+}
 
 export default app;
