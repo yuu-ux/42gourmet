@@ -1,10 +1,24 @@
 import { getConnection } from '../db/mysql.js';
 import { prisma } from '../db/mysql.js';
 
-export const retrieveStores = async (filters = {}) => {
+export const findStores = async (filters = {}) => {
     const stores = await prisma.stores.findMany({
-        include: {
-            store_operation_hours: true,
+        select: {
+            id: true,
+            name: true,
+            address: true,
+            price_level: true,
+            latitude: true,
+            longitude: true,
+            genre: true,
+            reason: true,
+            store_operation_hours: {
+                select: {
+                    day_of_week: true,
+                    open_time: true,
+                    close_time: true,
+                }
+            }
         },
     });
     return stores;

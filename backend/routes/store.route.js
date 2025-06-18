@@ -1,5 +1,5 @@
 import {
-    findStores,
+    searchStores,
     getStoreById,
     addStore,
     removeStore,
@@ -14,10 +14,10 @@ import {
 } from '../schemas/store.schema.js';
 
 export default async (fastify) => {
-    fastify.get(
-        '/stores',
-        async (request) => await findStores(request, request.query)
-    );
+    fastify.get('/stores', {
+        schema: getStoresSchema,
+        handler: async (request) => await searchStores(request, request.query),
+    });
 
     fastify.get('/stores/:id', {
         schema: getStoreByIdSchema,

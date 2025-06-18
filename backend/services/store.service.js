@@ -1,20 +1,16 @@
 import {
-    retrieveStores,
+    findStores,
     findStoreById,
     createStore,
     deleteStore,
     updateStore,
 } from '../repositories/store.repository.js';
 import { set, format, addDays } from 'date-fns';
+import app from '../app.js';
 
-export const findStores = async (request, queryParams = {}) => {
-    const filters = {
-        genre: queryParams.genre,
-        price_level: queryParams.price_level,
-        reason: queryParams.reason,
-    };
-    const stores = await retrieveStores(filters);
-
+// TODO
+// 24時間営業を考慮
+const filterOpenStores = async (stores, request) => {
     // 営業時間を整形する
     // 曜日: [
     //     {
@@ -46,12 +42,13 @@ export const findStores = async (request, queryParams = {}) => {
     // 営業時間判定
     for (const store of stores) {
         const hoursToday = store.store_operation_hours?.[DayOfWeek];
+        let is_open;
 
         if (!hoursToday || hoursToday.length === 0) {
-            store.is_open = false;
+            is_open = false;
         } else {
             const now = request.now;
-            store.is_open = hoursToday.some(({ open_time, close_time }) => {
+            is_open = hoursToday.some(({ open_time, close_time }) => {
                 const _open_time = set(now, {
                     hours: open_time.getHours(),
                     minutes: open_time.getMinutes(),
@@ -72,11 +69,26 @@ export const findStores = async (request, queryParams = {}) => {
                 return now >= _open_time && now <= _close_time;
             });
         }
-        const { store_operation_hours, created_at, modified_at, ...rest } =
-            store;
-        res.push(rest);
+        const { store_operation_hours, ...rest } = store;
+        if (is_open) res.push(rest);
     }
     return res;
+}
+
+export const searchStores = async (request, queryParams = {}) => {
+    const filters = {
+        genre: queryParams.genre,
+        price_level: queryParams.price_level,
+        reason: queryParams.reason,
+        is_open: queryParams.is_open,
+    };
+    let stores = await findStores(filters);
+
+    if (filters?.is_open) {
+        stores = await filterOpenStores(stores, request);
+    }
+
+    return stores.map(({ store_operation_hours, ...rest }) => rest);
 };
 
 export const getStoreById = async (id) => {
