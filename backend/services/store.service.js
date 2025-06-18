@@ -63,7 +63,8 @@ const filterOpenStores = async (stores, request) => {
                 });
                 // 深夜営業を考慮
                 // 例：16:00〜05:00
-                if (_open_time > _close_time) {
+                if (_open_time >= _close_time) {
+                    if (now < _close_time) _open_time = addDays(_open_time, -1);
                     _close_time = addDays(_close_time, 1);
                 }
                 return now >= _open_time && now <= _close_time;
