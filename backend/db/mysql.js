@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 
@@ -26,7 +27,6 @@ export const connectDB = async () => {
 
             console.log('データベース接続プールが作成されました');
 
-            await initDatabase();
             return;
         } catch (error) {
             lastError = error;
@@ -53,32 +53,22 @@ export const getConnection = async () => {
 };
 
 export const initDatabase = async () => {
-    const connection = await getConnection();
+    const pool = await getConnection();
 
     try {
-        await connection.query(`
-      CREATE TABLE IF NOT EXISTS stores (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        address VARCHAR(500),
-        price_level INT,
-        latitude DECIMAL(10, 8),
-        longitude DECIMAL(11, 8),
-        genre VARCHAR(255),
-        reason TEXT
-      )
-    `);
+        // TODO ファイルパス定数にする
+        const ddl = await readFile('/app/db/create_table.ddl', 'utf-8');
 
-        await connection.query(`
-      CREATE TABLE IF NOT EXISTS store_operation_hours (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        store_id INT NOT NULL,
-        day_of_week ENUM('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday') NOT NULL,
-        open_time VARCHAR(10),
-        close_time VARCHAR(10),
-        CONSTRAINT fk_store_id FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE
-      )
-    `);
+        const statements = ddl
+            .split(/(?=CREATE TABLE)/i)
+            .map((stmt) => stmt.trim())
+            .filter((stmt) => stmt.length > 0);
+
+        for (const statement of statements) {
+            if (statement.startsWith('CREATE TABLE')) {
+                await pool.query(statement);
+            }
+        }
 
         console.log('テーブルが初期化されました');
     } catch (error) {
