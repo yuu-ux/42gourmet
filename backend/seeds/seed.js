@@ -69,9 +69,25 @@ const parseHours = (line) => {
         return [
             {
                 day_of_week: dayOfWeek,
-                open_time: format(set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0}), 'HH:mm:ss'),
-                close_time: format(set(new Date(), {hours: 0, minutes: 0, seconds: 0, milliseconds: 0}), 'HH:mm:ss'),
-            }
+                open_time: format(
+                    set(new Date(), {
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0,
+                        milliseconds: 0,
+                    }),
+                    'HH:mm:ss'
+                ),
+                close_time: format(
+                    set(new Date(), {
+                        hours: 0,
+                        minutes: 0,
+                        seconds: 0,
+                        milliseconds: 0,
+                    }),
+                    'HH:mm:ss'
+                ),
+            },
         ];
     }
     if (times.includes('Closed')) return [];

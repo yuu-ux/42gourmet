@@ -58,7 +58,6 @@ app.setErrorHandler((error, request, reply) => {
     reply.code(500).send({ error: 'サーバーエラーが発生しました' });
 });
 
-
 // テストのときもサーバーがリッスンしてエラーが発生するため、
 // app.js が実行されたかどうか判定する
 const __filename = fileURLToPath(import.meta.url);

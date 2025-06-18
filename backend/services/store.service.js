@@ -33,7 +33,7 @@ const convertStoreOperationHours = (stores) => {
         }
         store.store_operation_hours = grouped;
     }
-}
+};
 
 const isNowInOpenRange = (now, open_time, close_time, openShiftDays = 0, closeShiftDays = 0) => {
     let _open = set(addDays(now, openShiftDays), {
@@ -69,7 +69,8 @@ export const filterOpenStores = async (stores, request) => {
 
     // 営業時間判定
     for (const store of stores) {
-        const hoursYesterday = store.store_operation_hours?.[DayOfWeekYesterDay] || [];
+        const hoursYesterday =
+            store.store_operation_hours?.[DayOfWeekYesterDay] || [];
         const hoursToday = store.store_operation_hours?.[DayOfWeekToday] || [];
         let is_open = false;
 
