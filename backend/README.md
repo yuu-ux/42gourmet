@@ -22,9 +22,16 @@ Fastify と MySQL を使用したレストラン情報 API サーバー
   cp backend/.env.example .env
   ```
 
-- ダミデータ挿入
+  マイグレーション
   ```bash
   docker compose exec backend node /app/seeds/seed.js
+  docker compose exec backend npx prisma db pull
+  docker compose exec backend npx prisma generate
+  ```
+
+  テスト
+  ```bash
+  npx vitest run
   ```
 
 ### データベースの設定

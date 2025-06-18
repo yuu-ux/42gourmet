@@ -1,20 +1,119 @@
 import {
-    findAllStores,
+    findStores,
     findStoreById,
     createStore,
     deleteStore,
     updateStore,
 } from '../repositories/store.repository.js';
+import { set, format, addDays, subDays, isBefore } from 'date-fns';
+import app from '../app.js';
 
-export const getStores = async (queryParams = {}) => {
+const SHIFT_TO_YESTERDAY = -1;
+
+const convertStoreOperationHours = (stores) => {
+    // 営業時間を整形する
+    // 曜日: [
+    //     {
+    //         open_time: ,
+    //         close_time: ,
+    //     },
+    //     {
+    //         open_time: ,
+    //         close_time,
+    //     }
+    // ]
+    for (const store of stores) {
+        const grouped = {};
+        for (const storeHours of store.store_operation_hours) {
+            const key = storeHours.day_of_week;
+            if (!grouped[key]) grouped[key] = [];
+
+            grouped[key].push({
+                open_time: storeHours.open_time,
+                close_time: storeHours.close_time,
+            });
+        }
+        store.store_operation_hours = grouped;
+    }
+};
+
+const isNowInOpenRange = (
+    now,
+    open_time,
+    close_time,
+    openShiftDays = 0,
+    closeShiftDays = 0
+) => {
+    let _open = set(addDays(now, openShiftDays), {
+        hours: open_time.getHours(),
+        minutes: open_time.getMinutes(),
+        seconds: 0,
+        milliseconds: 0,
+    });
+
+    let _close = set(addDays(now, closeShiftDays), {
+        hours: close_time.getHours(),
+        minutes: close_time.getMinutes(),
+        seconds: 0,
+        milliseconds: 0,
+    });
+
+    // 24 時間営業の判定
+    if (_close.getTime() === _open.getTime()) return true;
+
+    // 深夜営業を考慮
+    if (isBefore(_close, _open)) _close = addDays(_close, 1);
+
+    return now >= _open && now <= _close;
+};
+
+export const filterOpenStores = (stores, request) => {
+    convertStoreOperationHours(stores);
+
+    const now = request.now;
+    const DayOfWeekToday = format(now, 'EEEE');
+    const DayOfWeekYesterDay = format(subDays(now, 1), 'EEEE');
+    const res = [];
+
+    // 営業時間判定
+    for (const store of stores) {
+        const hoursYesterday =
+            store.store_operation_hours?.[DayOfWeekYesterDay] || [];
+        const hoursToday = store.store_operation_hours?.[DayOfWeekToday] || [];
+        let is_open = false;
+
+        // a ||= b は a がfalseの場合のみbを評価し代入する
+        // 今日の営業時間内であればtrueになる
+        // 違う場合前日の深夜営業をチェックする
+        is_open ||= hoursToday.some(({ open_time, close_time }) =>
+            isNowInOpenRange(now, open_time, close_time)
+        );
+
+        // 深夜営業を考慮して昨日の営業時間内かどうかを確認したい
+        is_open ||= hoursYesterday.some(({ open_time, close_time }) =>
+            isNowInOpenRange(now, open_time, close_time, SHIFT_TO_YESTERDAY)
+        );
+
+        const { store_operation_hours, ...rest } = store;
+        if (is_open) res.push(rest);
+    }
+    return res;
+};
+
+export const searchStores = async (request, queryParams = {}) => {
     const filters = {
         genre: queryParams.genre,
         price_level: queryParams.price_level,
-        latitude: queryParams.latitude,
-        longitude: queryParams.longitude,
+        reason: queryParams.reason,
+        is_open: queryParams.is_open,
     };
+    let stores = await findStores(filters);
 
-    return await findAllStores(filters);
+    if (filters?.is_open) {
+        stores = filterOpenStores(stores, request);
+    }
+
+    return stores.map(({ store_operation_hours, ...rest }) => rest);
 };
 
 export const getStoreById = async (id) => {

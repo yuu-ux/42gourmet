@@ -1,56 +1,27 @@
 import { getConnection } from '../db/mysql.js';
+import { prisma } from '../db/mysql.js';
 
-export const findAllStores = async (filters = {}) => {
-    const pool = await getConnection();
-
-    let query = `
-    SELECT
-      s.*,
-      GROUP_CONCAT(
-        JSON_OBJECT(
-          'day_of_week', oh.day_of_week,
-          'open_time', oh.open_time,
-          'close_time', oh.close_time
-        )
-      ) as operation_hours
-    FROM stores s
-    LEFT JOIN store_operation_hours oh ON s.id = oh.store_id
-  `;
-
-    const conditions = [];
-    const params = [];
-
-    if (filters.genre) {
-        conditions.push('s.genre = ?');
-        params.push(filters.genre);
-    }
-
-    if (filters.price_level) {
-        conditions.push('s.price_level = ?');
-        params.push(filters.price_level);
-    }
-
-    if (filters.latitude && filters.longitude) {
-        conditions.push(
-            '(6371 * acos(cos(radians(?)) * cos(radians(s.latitude)) * cos(radians(s.longitude) - radians(?)) + sin(radians(?)) * sin(radians(s.latitude)))) <= 1'
-        );
-        params.push(filters.latitude, filters.longitude, filters.latitude);
-    }
-
-    if (conditions.length > 0) {
-        query += ' WHERE ' + conditions.join(' AND ');
-    }
-
-    query += ' GROUP BY s.id';
-
-    const [rows] = await pool.query(query, params);
-
-    return rows.map((row) => ({
-        ...row,
-        operation_hours: row.operation_hours
-            ? JSON.parse(`[${row.operation_hours}]`)
-            : [],
-    }));
+export const findStores = async (filters = {}) => {
+    const stores = await prisma.stores.findMany({
+        select: {
+            id: true,
+            name: true,
+            address: true,
+            price_level: true,
+            latitude: true,
+            longitude: true,
+            genre: true,
+            reason: true,
+            store_operation_hours: {
+                select: {
+                    day_of_week: true,
+                    open_time: true,
+                    close_time: true,
+                },
+            },
+        },
+    });
+    return stores;
 };
 
 export const findStoreById = async (id) => {

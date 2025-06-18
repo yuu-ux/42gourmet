@@ -1,4 +1,4 @@
-name,address,price_level,archive,latitude,longitude,genre,reason
+name,address,price_level,archive,longitude,latitude,genre,reason
 東京都庁,東京都新宿区西新宿２丁目８−１,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿２丁目８−１,139.691772,35.689629,,
 創始麺屋武蔵,東京都新宿区西新宿７丁目２−６ 西新宿Ｋ－１ビル 1F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目２−６ 西新宿Ｋ－１ビル 1F,139.698593,35.695362,,
 カレーハウス CoCo壱番屋 西新宿五丁目駅前通店,東京都新宿区西新宿５丁目８−８ メゾン･ド･新宿,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿５丁目８−８ メゾン･ド･新宿,139.687012,35.691063,,

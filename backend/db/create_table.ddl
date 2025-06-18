@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS stores (
     id           INT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY                                   COMMENT 'ID',
     name         VARCHAR(255) NOT NULL                                                              COMMENT '店舗名',
     address      VARCHAR(500) NOT NULL                                                              COMMENT '店舗の住所',
-    price_level  TINYINT NOT NULL                                                                       COMMENT '価格帯',
+    price_level  TINYINT NOT NULL                                                                   COMMENT '価格帯',
     -- 1: "~500",
     -- 2: "501~999",
     -- 3: "1000~1500",

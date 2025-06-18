@@ -3,3 +3,4 @@
 .vscode
 backend/public
 .env
+backend/generated/prisma
