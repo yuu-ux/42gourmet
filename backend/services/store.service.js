@@ -73,7 +73,7 @@ const filterOpenStores = async (stores, request) => {
         if (is_open) res.push(rest);
     }
     return res;
-}
+};
 
 export const searchStores = async (request, queryParams = {}) => {
     const filters = {
