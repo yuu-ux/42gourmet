@@ -3,6 +3,13 @@ import { prisma } from '../db/mysql.js';
 
 export const findStores = async (filters = {}) => {
     const stores = await prisma.stores.findMany({
+        where: {
+            genre: filters.genre,
+            price_level: filters.price_level,
+            reason: {
+                array_contains: filters.reason,
+            },
+        },
         select: {
             id: true,
             name: true,
