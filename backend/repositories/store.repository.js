@@ -1,13 +1,14 @@
 import { getConnection } from '../db/mysql.js';
 import { prisma } from '../db/mysql.js';
+import { Prisma } from '../generated/prisma/client.js';
 
 export const findStores = async (filters = {}) => {
     const stores = await prisma.stores.findMany({
         where: {
-            genre: filters.genre,
-            price_level: filters.price_level,
+            genre: filters.genre ?? Prisma.skip,
+            price_level: filters.price_level ?? Prisma.skip,
             reason: {
-                array_contains: filters.reason,
+                array_contains: filters.reason ?? Prisma.skip,
             },
         },
         select: {
