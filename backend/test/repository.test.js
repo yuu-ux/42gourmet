@@ -12,9 +12,11 @@ vi.mock('../db/mysql.js', () => ({
 import { prisma } from '../db/mysql.js';
 
 describe('findStores', () => {
+    beforeEach(() => {
+        vi.clearAllMocks();
+    });
     it('filters: genre=1, price_level=2, reason=[1,2]', async () => {
         await findStores({ genre: 1, price_level: 2, reason: [1, 2] });
-
         expect(prisma.stores.findMany).toHaveBeenCalledWith(
             expect.objectContaining({
                 where: {
