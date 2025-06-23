@@ -105,11 +105,10 @@ export const searchStores = async (request, queryParams = {}) => {
         genre: queryParams.genre,
         price_level: queryParams.price_level,
         reason: queryParams.reason,
-        is_open: queryParams.is_open,
     };
     let stores = await findStores(filters);
 
-    if (filters?.is_open) {
+    if (queryParams?.is_open) {
         stores = filterOpenStores(stores, request);
     }
 
