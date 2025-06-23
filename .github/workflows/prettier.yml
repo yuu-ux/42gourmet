@@ -28,18 +28,26 @@ jobs:
         run: yarn install --frozen-lockfile
 
       - name: Get changed files and run Prettier
+        id: prettier
         run: |
           git fetch origin ${{ github.base_ref }}
-          git diff --name-only origin/${{ github.base_ref }}...HEAD \
-          | grep -E "${{ env.FILE_PATTERN }}" \
-          | xargs npx prettier --write
-          if [ -s changed_files.txt ]; then
-            cat changed_files.txt | xargs npx prettier --write
+          CHANGED=$(git diff --name-only origin/${{ github.base_ref }}...HEAD | grep -E "${{ env.FILE_PATTERN }}" || true)
+
+          if [ -n "$CHANGED" ]; then
+            echo "$CHANGED" | xargs npx prettier --write
+          else
+            echo 'No matching files to format.'
+          fi
+
+          if git diff --quiet; then
+            echo "formatted=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "formatted=true" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Commit Prettier changes
         uses: stefanzweifel/git-auto-commit-action@v3
-        if: github.actor != 'github-actions[bot]'
+        if: steps.prettier.outputs.formatted == 'true' && github.actor != 'github-actions[bot]'
         with:
           commit_message: Apply Prettier Change
           branch: ${{ github.head_ref }}

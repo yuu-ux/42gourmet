@@ -43,6 +43,7 @@ MySQL データベースを用意し、.env ファイルに接続情報を設定
 - ユーザー: root
 - パスワード: password
 - データベース: gourmet
+- DATABASE_URL=mysql://USER:PASSWORD@HOST:PORT/DATABASE
 
 ## API エンドポイント
 
