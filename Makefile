@@ -7,9 +7,5 @@ REGION = asia-northeast1
 build:
 	docker compose exec frontend npm run build
 
-# Cloud Run へデプロイ
-deploy: build
-	cd backend && gcloud run deploy $(SERVICE_NAME) \
-		--source . \
-		--region $(REGION) \
-		--allow-unauthenticated
+deploy:
+	cd frontend && npm install && npm run build && cp -r ./dist ../backend/public
