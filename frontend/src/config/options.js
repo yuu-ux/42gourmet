@@ -16,17 +16,17 @@ export const reasonOptions = [
 ];
 
 export const priceOptions = [
-  { title: "~500", value: 1 },
-  { title: "~999", value: 2 },
-  { title: "~1500", value: 3 },
-  { title: "1501~", value: 4 },
+    { title: '~500', value: 1 },
+    { title: '~999', value: 2 },
+    { title: '~1500', value: 3 },
+    { title: '1501~', value: 4 },
 ];
 
 export const priceOptionsForRegister = [
-  { title: "~500", value: 1 },
-  { title: "501~999", value: 2 },
-  { title: "1000~1500", value: 3 },
-  { title: "1501~", value: 4 },
+    { title: '~500', value: 1 },
+    { title: '501~999', value: 2 },
+    { title: '1000~1500', value: 3 },
+    { title: '1501~', value: 4 },
 ];
 
 export const genreMap = {
