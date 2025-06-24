@@ -6,6 +6,7 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import { genreMap, reasonMap, priceMap } from "@/config/options";
 
 const props = defineProps({
   showOnlyOpen: Boolean,
@@ -58,13 +59,14 @@ const isOpenNow = (hours) => {
   });
 };
 
-const formatPriceLevel = (level) =>
-  ({
-    1: "~500",
-    2: "501~999",
-    3: "1000~1500",
-    4: "1501~",
-  })[level] ?? "不明";
+const formatGenre = (id) => genreMap[id] || "不明";
+const formatReason = (reasonIds) => {
+  if (!Array.isArray(reasonIds)) return reasonMap[reasonIds] || "不明";
+  return reasonIds
+    .map((id) => reasonMap[id] || "不明")
+    .join("、"); // 「、」で区切る（カンマでも可）
+};
+const formatPriceLevel = (id) => priceMap[id] || "不明";
 
 const getMarkerIconByGenre = (genre) =>
   ({

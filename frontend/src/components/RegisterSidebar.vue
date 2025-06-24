@@ -56,9 +56,7 @@
         label="価格帯"
         dense
         class="mt-3"
-        :item-title="
-          (item) => ['~500', '500~999', '1000~1500', '1500~'][item - 1]
-        "
+		:item-title="(item) => priceLabels[item]"
         :item-value="(item) => item"
       />
 
@@ -71,6 +69,8 @@
 
 <script setup>
 import { ref } from "vue";
+import { genreOptions, reasonOptions, priceOptions, priceLabels } from "@/config/options";
+
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
@@ -81,18 +81,6 @@ const selectedPlace = ref(null);
 const genre = ref(null);
 const reason = ref(null);
 const price = ref(null);
-
-const genreOptions = [
-  "和食",
-  "中華",
-  "洋食",
-  "アジアン",
-  "カフェ",
-  "居酒屋",
-  "その他",
-];
-const reasonOptions = ["コスパが良い", "提供が早い", "味が最高", "栄養満点"];
-const priceOptions = [1, 2, 3, 4];
 
 const map = ref(null);
 
