@@ -15,7 +15,12 @@ export const reasonOptions = [
     { title: '栄養満点', value: 4 },
 ];
 
-export const priceOptions = [1, 2, 3, 4];
+export const priceOptions = [
+  { title: "~500", value: 1 },
+  { title: "~999", value: 2 },
+  { title: "~1500", value: 3 },
+  { title: "1501~", value: 4 },
+];
 
 export const priceLabels = {
     1: '~500',

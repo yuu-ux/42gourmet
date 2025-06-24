@@ -81,7 +81,7 @@
 import { ref } from "vue";
 import MapView from "./components/MapView.vue";
 import RegisterSidebar from "./components/RegisterSidebar.vue";
-import { genreOptions, reasonOptions, priceOptions, priceLabels } from "@/config/options";
+import { genreOptions, reasonOptions, priceOptions } from "@/config/options";
 
 const drawer = ref(false);
 const showOnlyOpen = ref(false);
