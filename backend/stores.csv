@@ -1,33 +1,33 @@
 name,address,price_level,archive,longitude,latitude,genre,reason
-東京都庁,東京都新宿区西新宿２丁目８−１,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿２丁目８−１,139.691772,35.689629,,
-創始麺屋武蔵,東京都新宿区西新宿７丁目２−６ 西新宿Ｋ－１ビル 1F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目２−６ 西新宿Ｋ－１ビル 1F,139.698593,35.695362,,
-カレーハウス CoCo壱番屋 西新宿五丁目駅前通店,東京都新宿区西新宿５丁目８−８ メゾン･ド･新宿,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿５丁目８−８ メゾン･ド･新宿,139.687012,35.691063,,
-もうやんカレー西新宿大忍具店,東京都新宿区西新宿８丁目１９−２ 西新宿ＴＫビル 1F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿８丁目１９−２ 西新宿ＴＫビル 1F,139.690582,35.695297,,
-肉そば家 笑梟（ふくろう）西新宿,東京都新宿区西新宿４丁目１４−２,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目１４−２,139.687500,35.690414,,
-松屋 西新宿店,東京都新宿区西新宿５丁目１０−１４ 西新宿橋谷田ビル 1F・B1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿５丁目１０−１４ 西新宿橋谷田ビル 1F・B1F,139.685806,35.690521,,
-The MEALS アジアンダイニング ザ ミールス 西新宿店,東京都新宿区西新宿６丁目１６−９,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−９,139.687469,35.691338,,
-らぁ麺や 嶋,東京都渋谷区本町３丁目４１−１１,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都渋谷区本町３丁目４１−１１,139.680756,35.688347,,
-毎日カオマンガイ 新宿店,東京都新宿区西新宿６丁目１６−８,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−８,139.687637,35.691387,,
-ひじり屋 西新宿店,東京都新宿区西新宿６丁目１６−１２ コーポ寺前,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−１２ コーポ寺前,139.687256,35.691696,,
-あるでん亭 新宿住友ビル店,東京都新宿区西新宿２丁目６−１ 新宿住友ビル 地下1階,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿２丁目６−１ 新宿住友ビル 地下1階,139.692459,35.692017,,
-屋台DELi 小田急第一生命ビル店,東京都新宿区西新宿２丁目７−１ 新宿第一生命ビルディング 1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿２丁目７−１ 新宿第一生命ビルディング 1F,139.691376,35.691254,,
-しゅぞう,東京都新宿区西新宿７丁目１９−２２,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目１９−２２,139.696274,35.694660,,
-豚山 幡ヶ谷店,東京都渋谷区幡ケ谷２丁目１３−３,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都渋谷区幡ケ谷２丁目１３−３,139.676987,35.677479,,
-Spice Bazaar アチャカナ,東京都新宿区西新宿７丁目１２−２３ 松沢ビル 3階,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目１２−２３ 松沢ビル 3階,139.697037,35.693840,,
-馬鹿うま 西新宿本店,東京都新宿区西新宿４丁目１２−１５,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目１２−１５,139.686661,35.690186,,
-中華料理 華盛楼,東京都新宿区西新宿４丁目３０−９ シェモワ新宿,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目３０−９ シェモワ新宿,139.688110,35.688061,,
-居酒屋いくなら俺んち来る？宴会部 新宿店,東京都新宿区歌舞伎町１丁目２５−３ WaMall 西武新宿駅前ビル6F,4,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区歌舞伎町１丁目２５−３ WaMall 西武新宿駅前ビル6F,139.700470,35.694649,,
-やまと,東京都新宿区西新宿１丁目４−１８ 大和ビル,4,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目４−１８ 大和ビル,139.698441,35.693119,,
-立呑み晩杯屋 新宿思い出横丁,東京都新宿区西新宿１丁目２−８,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目２−８,139.699493,35.692692,,
-コーヒーショップ ～Arcobaleno Caffe&Bar Tokyo～,東京都新宿区西新宿４丁目１４−７ 1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目１４−７ 1F,139.687790,35.689873,,
-炭火屋 もり平,東京都新宿区西新宿６丁目１７−７ 英駆競７ 1階,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１７−７ 英駆競７ 1階,139.687469,35.692066,,
-新時代 新宿西口大ガード店,東京都新宿区西新宿１丁目３−１ 新宿サンフラワービル 2F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目３−１ 新宿サンフラワービル 2F,139.698929,35.693390,,
-SpiceCurry FIFTY,"中野区中央1丁目 32-8 ユニーブル 1F spicecurry fifty, 東京都 164-0011",3,"https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=中野区中央1丁目 32-8 ユニーブル 1F spicecurry fifty, 東京都 164-0011",139.684341,35.698154,,
-KOME TO COFFEE,東京都新宿区西新宿６丁目１６−８,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−８,139.687637,35.691387,,
-麺家たいせい,東京都中野区中央２丁目２−１ ベル中野坂上,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都中野区中央２丁目２−１ ベル中野坂上,139.682175,35.697205,,
-酒膳 穂のほまれ 西新宿店,東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B1F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B1F,139.696732,35.692776,,
-鶏Dining&Bar Goto,東京都新宿区西新宿７丁目４−５ 冨士野ビル B1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目４−５ 冨士野ビル B1F,139.698364,35.695961,,
-天吉屋 新宿店,東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B2F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B2F,139.696732,35.692776,,
-天秀,東京都新宿区西新宿７丁目１２−２１,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目１２−２１,139.697083,35.694096,,
-中華そば 流川,東京都新宿区西新宿７丁目９−１５ 新宿ダイカンプラザ ビズネス 清田ビル 1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目９−１５ 新宿ダイカンプラザ ビズネス 清田ビル 1F,139.698425,35.694729,,
-MORETHAN BAKERY Shinjuku,"東京都新宿区西新宿４丁目３１−１ The Knot Tokyo Shinjuku, 1F",2,"https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目３１−１ The Knot Tokyo Shinjuku, 1F",139.688736,35.688705,,
+東京都庁,東京都新宿区西新宿２丁目８−１,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿２丁目８−１,139.691772,35.689629,7,1
+創始麺屋武蔵,東京都新宿区西新宿７丁目２−６ 西新宿Ｋ－１ビル 1F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目２−６ 西新宿Ｋ－１ビル 1F,139.698593,35.695362,2,"[1, 2]"
+カレーハウス CoCo壱番屋 西新宿五丁目駅前通店,東京都新宿区西新宿５丁目８−８ メゾン･ド･新宿,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿５丁目８−８ メゾン･ド･新宿,139.687012,35.691063,4,"[1, 2, 4]"
+もうやんカレー西新宿大忍具店,東京都新宿区西新宿８丁目１９−２ 西新宿ＴＫビル 1F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿８丁目１９−２ 西新宿ＴＫビル 1F,139.690582,35.695297,4,"[2, 4]"
+肉そば家 笑梟（ふくろう）西新宿,東京都新宿区西新宿４丁目１４−２,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目１４−２,139.687500,35.690414,1,"[3, 4]"
+松屋 西新宿店,東京都新宿区西新宿５丁目１０−１４ 西新宿橋谷田ビル 1F・B1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿５丁目１０−１４ 西新宿橋谷田ビル 1F・B1F,139.685806,35.690521,1,"[1, 2]"
+The MEALS アジアンダイニング ザ ミールス 西新宿店,東京都新宿区西新宿６丁目１６−９,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−９,139.687469,35.691338,4,"[1,3, 4]"
+らぁ麺や 嶋,東京都渋谷区本町３丁目４１−１１,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都渋谷区本町３丁目４１−１１,139.680756,35.688347,2,"[1, 2, 3]"
+毎日カオマンガイ 新宿店,東京都新宿区西新宿６丁目１６−８,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−８,139.687637,35.691387,4,"[1, 2, 3, 4]"
+ひじり屋 西新宿店,東京都新宿区西新宿６丁目１６−１２ コーポ寺前,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−１２ コーポ寺前,139.687256,35.691696,2,"[2, 3]"
+あるでん亭 新宿住友ビル店,東京都新宿区西新宿２丁目６−１ 新宿住友ビル 地下1階,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿２丁目６−１ 新宿住友ビル 地下1階,139.692459,35.692017,3,"[3, 4]"
+屋台DELi 小田急第一生命ビル店,東京都新宿区西新宿２丁目７−１ 新宿第一生命ビルディング 1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿２丁目７−１ 新宿第一生命ビルディング 1F,139.691376,35.691254,7,"[1, 2, 4]"
+しゅぞう,東京都新宿区西新宿７丁目１９−２２,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目１９−２２,139.696274,35.694660,6,"[1, 3]"
+豚山 幡ヶ谷店,東京都渋谷区幡ケ谷２丁目１３−３,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都渋谷区幡ケ谷２丁目１３−３,139.676987,35.677479,2,"[2, 3, 4]"
+Spice Bazaar アチャカナ,東京都新宿区西新宿７丁目１２−２３ 松沢ビル 3階,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目１２−２３ 松沢ビル 3階,139.697037,35.693840,4,"[3, 4]"
+馬鹿うま 西新宿本店,東京都新宿区西新宿４丁目１２−１５,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目１２−１５,139.686661,35.690186,6,"[1, 2]"
+中華料理 華盛楼,東京都新宿区西新宿４丁目３０−９ シェモワ新宿,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目３０−９ シェモワ新宿,139.688110,35.688061,2,"[1, 2]"
+居酒屋いくなら俺んち来る？宴会部 新宿店,東京都新宿区歌舞伎町１丁目２５−３ WaMall 西武新宿駅前ビル6F,4,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区歌舞伎町１丁目２５−３ WaMall 西武新宿駅前ビル6F,139.700470,35.694649,6,"[1, 2]"
+やまと,東京都新宿区西新宿１丁目４−１８ 大和ビル,4,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目４−１８ 大和ビル,139.698441,35.693119,1,"[3]"
+立呑み晩杯屋 新宿思い出横丁,東京都新宿区西新宿１丁目２−８,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目２−８,139.699493,35.692692,6,"[1, 2]"
+コーヒーショップ ～Arcobaleno Caffe&Bar Tokyo～,東京都新宿区西新宿４丁目１４−７ 1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目１４−７ 1F,139.687790,35.689873,5,"[3]"
+炭火屋 もり平,東京都新宿区西新宿６丁目１７−７ 英駆競７ 1階,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１７−７ 英駆競７ 1階,139.687469,35.692066,1,"[1, 4]"
+新時代 新宿西口大ガード店,東京都新宿区西新宿１丁目３−１ 新宿サンフラワービル 2F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目３−１ 新宿サンフラワービル 2F,139.698929,35.693390,6,"[1, 2]"
+SpiceCurry FIFTY,"中野区中央1丁目 32-8 ユニーブル 1F spicecurry fifty, 東京都 164-0011",3,"https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=中野区中央1丁目 32-8 ユニーブル 1F spicecurry fifty, 東京都 164-0011",139.684341,35.698154,4,"[3, 4]"
+KOME TO COFFEE,東京都新宿区西新宿６丁目１６−８,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿６丁目１６−８,139.687637,35.691387,5,"[3]"
+麺家たいせい,東京都中野区中央２丁目２−１ ベル中野坂上,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都中野区中央２丁目２−１ ベル中野坂上,139.682175,35.697205,2,"[1, 4]"
+酒膳 穂のほまれ 西新宿店,東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B1F,3,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B1F,139.696732,35.692776,1,"[3, 4]"
+鶏Dining&Bar Goto,東京都新宿区西新宿７丁目４−５ 冨士野ビル B1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目４−５ 冨士野ビル B1F,139.698364,35.695961,1,"[3, 4]"
+天吉屋 新宿店,東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B2F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿１丁目２６−２ 新宿野村ビル B2F,139.696732,35.692776,1,"[3, 4]"
+天秀,東京都新宿区西新宿７丁目１２−２１,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目１２−２１,139.697083,35.694096,1,"[3, 4]"
+中華そば 流川,東京都新宿区西新宿７丁目９−１５ 新宿ダイカンプラザ ビズネス 清田ビル 1F,2,https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿７丁目９−１５ 新宿ダイカンプラザ ビズネス 清田ビル 1F,139.698425,35.694729,2,"[1, 2]"
+MORETHAN BAKERY Shinjuku,"東京都新宿区西新宿４丁目３１−１ The Knot Tokyo Shinjuku, 1F",2,"https://geocode.csis.u-tokyo.ac.jp/cgi-bin/simple_geocode.cgi?charset=UTF8&addr=東京都新宿区西新宿４丁目３１−１ The Knot Tokyo Shinjuku, 1F",139.688736,35.688705,5,"[3]"
