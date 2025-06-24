@@ -28,30 +28,37 @@ const getStores = async (csvFileName) => {
             price_level: Number(record.price_level),
             latitude: Number(record.latitude),
             longitude: Number(record.longitude),
-			genre:
-				record.genre === undefined || record.genre === ''
-					? 1
-					: isNaN(Number(record.genre))
-					? 1
-					: Number(record.genre),
-				reason:
-					record.reason === undefined || record.reason === ''
-						? JSON.stringify([1, 2])
-						: (() => {
-							  try {
-								  const parsed = Array.isArray(record.reason)
-									  ? record.reason.map(Number).filter((n) => !isNaN(n))
-									  : String(record.reason)
-											.replace(/[\[\]\s]/g, '')
-											.split(',')
-											.map(Number)
-											.filter((n) => !isNaN(n));
-								  return JSON.stringify(parsed.length > 0 ? parsed : [1, 2]);
-							  } catch (error) {
-								  console.warn(`Invalid reason format for record ${index + 1}:`, record.reason);
-								  return JSON.stringify([1, 2]);
-							  }
-						  })(),
+            genre:
+                record.genre === undefined || record.genre === ''
+                    ? 1
+                    : isNaN(Number(record.genre))
+                      ? 1
+                      : Number(record.genre),
+            reason:
+                record.reason === undefined || record.reason === ''
+                    ? JSON.stringify([1, 2])
+                    : (() => {
+                          try {
+                              const parsed = Array.isArray(record.reason)
+                                  ? record.reason
+                                        .map(Number)
+                                        .filter((n) => !isNaN(n))
+                                  : String(record.reason)
+                                        .replace(/[\[\]\s]/g, '')
+                                        .split(',')
+                                        .map(Number)
+                                        .filter((n) => !isNaN(n));
+                              return JSON.stringify(
+                                  parsed.length > 0 ? parsed : [1, 2]
+                              );
+                          } catch (error) {
+                              console.warn(
+                                  `Invalid reason format for record ${index + 1}:`,
+                                  record.reason
+                              );
+                              return JSON.stringify([1, 2]);
+                          }
+                      })(),
         }));
 
         return stores;
