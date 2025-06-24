@@ -10,18 +10,14 @@
     <v-btn color="primary" block @click="searchPlace" class="mt-2">検索</v-btn>
 
     <v-list v-if="searchResults.length" class="mt-4">
-      <v-list-item
-        v-for="(place, index) in searchResults"
-        :key="index"
-        @click="selectPlace(place)"
-      >
-        <v-list-item-content>
-          <v-list-item-title>{{ place.name }}</v-list-item-title>
-          <v-list-item-subtitle>{{
-            place.formatted_address
-          }}</v-list-item-subtitle>
-        </v-list-item-content>
-      </v-list-item>
+		<v-list-item
+		  v-for="(place, index) in searchResults"
+		  :key="index"
+		  @click="selectPlace(place)"
+		>
+		  <v-list-item-title>{{ place.name }}</v-list-item-title>
+		  <v-list-item-subtitle>{{ place.formatted_address }}</v-list-item-subtitle>
+		</v-list-item>
     </v-list>
 
     <div v-if="selectedPlace" class="mt-4">
@@ -39,6 +35,8 @@
         :items="genreOptions"
         label="食事ジャンル"
         dense
+		item-title="title"
+		item-value="value"
         class="mt-3"
       ></v-select>
 
@@ -47,6 +45,9 @@
         :items="reasonOptions"
         label="おすすめ理由"
         dense
+		multiple
+		item-title="title"
+		item-value="value"
         class="mt-3"
       ></v-select>
 
@@ -110,28 +111,41 @@ const searchPlace = () => {
   });
 };
 
-const selectPlace = (place) => {
+const selectPlace = async (place) => {
+  const getDetailsPromise = (placeId) => {
+    return new Promise((resolve, reject) => {
+      const service = new google.maps.places.PlacesService(map.value);
+      service.getDetails({ placeId }, (details, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          resolve(details);
+        } else {
+          reject(new Error("getDetails に失敗しました"));
+        }
+      });
+    });
+  };
+
   if (!place || !place.place_id) {
     alert("このお店の情報が取得できません。別のお店を選んでください。");
     return;
   }
 
   loadMapReference();
-  const service = new google.maps.places.PlacesService(map.value);
-  service.getDetails({ placeId: place.place_id }, (details, status) => {
-    if (status !== google.maps.places.PlacesServiceStatus.OK) {
-      alert("店舗詳細情報の取得に失敗しました。");
-      return;
-    }
+
+  const details = await getDetailsPromise(place.place_id);
 
     if (!details.geometry || !details.name || !details.formatted_address) {
       alert("このお店の情報が不足しています。別のお店を選んでください。");
       return;
     }
 
+    const lat = details.geometry.location.lat();
+    const lng = details.geometry.location.lng();
+    const jaAddress = await fetchJapaneseAddress(lat, lng); // ← awaitはOK
+
     selectedPlace.value = {
       name: details.name,
-      formatted_address: details.formatted_address,
+      formatted_address: jaAddress,
       opening_hours: details.opening_hours ? details.opening_hours : null,
       geometry: details.geometry,
     };
@@ -142,8 +156,16 @@ const selectPlace = (place) => {
       "▶ opening_hours.weekday_text",
       details.opening_hours?.weekday_text || "(none)",
     );
-  });
 };
+
+async function fetchJapaneseAddress(lat, lng) {
+  const res = await fetch(
+    `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&language=ja&key=${API_KEY}`
+  );
+  const data = await res.json();
+  console.log("📦 Geocoding API レスポンス:", data); // ← 追加
+  return data.results?.[0]?.formatted_address || "住所不明";
+}
 
 const registerStore = async () => {
   if (!genre.value || !reason.value || !price.value) {
@@ -163,7 +185,7 @@ const registerStore = async () => {
         longitude: selectedPlace.value.geometry.location.lng(),
         price_level: price.value,
         genre: genre.value,
-        reason: reason.value,
+		reason: JSON.stringify(reason.value),
         operation_hours: selectedPlace.value.opening_hours
           ? parseOpeningHours(selectedPlace.value.opening_hours.weekday_text)
           : [],

@@ -13,6 +13,8 @@
         <v-select
           v-model="selectedPrice"
           :items="priceOptions"
+		  item-title="title"
+		  item-value="value"
           label="価格帯"
           clearable
           hide-details
@@ -24,6 +26,8 @@
         <v-select
           v-model="selectedGenre"
           :items="genreOptions"
+		  item-title="title"
+		  item-value="value"
           label="ジャンル"
           clearable
           hide-details
@@ -35,6 +39,8 @@
         <v-select
           v-model="selectedReason"
           :items="reasonOptions"
+		  item-title="title"
+		  item-value="value"
           label="おすすめ理由"
           clearable
           hide-details
