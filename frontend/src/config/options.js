@@ -22,12 +22,12 @@ export const priceOptions = [
   { title: "1501~", value: 4 },
 ];
 
-export const priceLabels = {
-    1: '~500',
-    2: '501~999',
-    3: '1000~1500',
-    4: '1501~',
-};
+export const priceOptionsForRegister = [
+  { title: "~500", value: 1 },
+  { title: "501~999", value: 2 },
+  { title: "1000~1500", value: 3 },
+  { title: "1501~", value: 4 },
+];
 
 export const genreMap = {
     1: '和食',
