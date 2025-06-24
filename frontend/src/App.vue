@@ -13,8 +13,6 @@
         <v-select
           v-model="selectedPrice"
           :items="priceOptions"
-		  item-title="title"
-		  item-value="value"
           label="価格帯"
           clearable
           hide-details
@@ -26,8 +24,6 @@
         <v-select
           v-model="selectedGenre"
           :items="genreOptions"
-		  item-title="title"
-		  item-value="value"
           label="ジャンル"
           clearable
           hide-details
@@ -39,8 +35,6 @@
         <v-select
           v-model="selectedReason"
           :items="reasonOptions"
-		  item-title="title"
-		  item-value="value"
           label="おすすめ理由"
           clearable
           hide-details
@@ -99,28 +93,16 @@ const selectedPrice = ref(null);
 const selectedReason = ref(null);
 
 const genreOptions = [
-  { title: "和食", value: 1 },
-  { title: "中華", value: 2 },
-  { title: "洋食", value: 3 },
-  { title: "アジアン", value: 4 },
-  { title: "カフェ", value: 5 },
-  { title: "居酒屋", value: 6 },
-  { title: "その他", value: 7 },
+  "和食",
+  "中華",
+  "洋食",
+  "アジアン",
+  "カフェ",
+  "居酒屋",
+  "その他",
 ];
-
-const priceOptions = [
-  { title: "~500", value: 1 },
-  { title: "~999", value: 2 },
-  { title: "~1500", value: 3 },
-  { title: "1501~", value: 4 },
-];
-
-const reasonOptions = [
-  { title: "コスパが良い", value: 1 },
-  { title: "提供が早い", value: 2 },
-  { title: "味が最高", value: 3 },
-  { title: "栄養満点", value: 4 },
-];
+const priceOptions = ["~500", "501~999", "1000~1500", "1501~"];
+const reasonOptions = ["コスパが良い", "提供が早い", "味が最高", "栄養満点"];
 
 const resetFilters = () => {
   selectedGenre.value = null;

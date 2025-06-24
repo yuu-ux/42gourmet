@@ -10,9 +10,9 @@ import { ref, watch, onMounted } from "vue";
 const props = defineProps({
   showOnlyOpen: Boolean,
   reloadTrigger: Number,
-  selectedGenre: Number,
-  selectedPrice: Number,
-  selectedReason: Number,
+  selectedGenre: String,
+  selectedPrice: String,
+  selectedReason: String,
 });
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -165,18 +165,7 @@ const addMarkers = () => {
 
 const fetchStores = async () => {
   try {
-   const params = new URLSearchParams();
-
-   if (props.showOnlyOpen) params.append("is_open", "1");
-   if (props.selectedGenre) params.append("genre", props.selectedGenre.toString());
-   if (props.selectedPrice) params.append("price_level", props.selectedPrice.toString());
-   if (props.selectedReason) params.append("reason", props.selectedReason.toString());
-
-   const url = `http://localhost:3000/api/stores?${params.toString()}`;
-   console.log("📡 取得URL:", url);
-
-   const res = await fetch(url);
-
+    const res = await fetch("http://localhost:3000/api/stores");
     stores.value = await res.json();
   } catch (err) {
     console.error("📡 店舗データ取得失敗:", err);

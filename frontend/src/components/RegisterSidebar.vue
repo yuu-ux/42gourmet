@@ -10,14 +10,18 @@
     <v-btn color="primary" block @click="searchPlace" class="mt-2">検索</v-btn>
 
     <v-list v-if="searchResults.length" class="mt-4">
-		<v-list-item
-		  v-for="(place, index) in searchResults"
-		  :key="index"
-		  @click="selectPlace(place)"
-		>
-		  <v-list-item-title>{{ place.name }}</v-list-item-title>
-		  <v-list-item-subtitle>{{ place.formatted_address }}</v-list-item-subtitle>
-		</v-list-item>
+      <v-list-item
+        v-for="(place, index) in searchResults"
+        :key="index"
+        @click="selectPlace(place)"
+      >
+        <v-list-item-content>
+          <v-list-item-title>{{ place.name }}</v-list-item-title>
+          <v-list-item-subtitle>{{
+            place.formatted_address
+          }}</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
     </v-list>
 
     <div v-if="selectedPlace" class="mt-4">
@@ -35,8 +39,6 @@
         :items="genreOptions"
         label="食事ジャンル"
         dense
-		item-title="title"
-		item-value="value"
         class="mt-3"
       ></v-select>
 
@@ -45,9 +47,6 @@
         :items="reasonOptions"
         label="おすすめ理由"
         dense
-		multiple
-		item-title="title"
-		item-value="value"
         class="mt-3"
       ></v-select>
 
@@ -84,22 +83,15 @@ const reason = ref(null);
 const price = ref(null);
 
 const genreOptions = [
-   { title: "和食", value: 1 },
-   { title: "中華", value: 2 },
-   { title: "洋食", value: 3 },
-   { title: "アジアン", value: 4 },
-   { title: "カフェ", value: 5 },
-   { title: "居酒屋", value: 6 },
-   { title: "その他", value: 7 },
+  "和食",
+  "中華",
+  "洋食",
+  "アジアン",
+  "カフェ",
+  "居酒屋",
+  "その他",
 ];
-
-const reasonOptions = [
-   { title: "コスパが良い", value: 1 },
-   { title: "提供が早い", value: 2 },
-   { title: "味が最高", value: 3 },
-   { title: "栄養満点", value: 4 },
-];
-
+const reasonOptions = ["コスパが良い", "提供が早い", "味が最高", "栄養満点"];
 const priceOptions = [1, 2, 3, 4];
 
 const map = ref(null);
@@ -183,7 +175,7 @@ const registerStore = async () => {
         longitude: selectedPlace.value.geometry.location.lng(),
         price_level: price.value,
         genre: genre.value,
-		reason: JSON.stringify(reason.value),
+        reason: reason.value,
         operation_hours: selectedPlace.value.opening_hours
           ? parseOpeningHours(selectedPlace.value.opening_hours.weekday_text)
           : [],
