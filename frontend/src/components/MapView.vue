@@ -68,7 +68,6 @@ const formatReason = (reasonIds) => {
 };
 const formatPriceLevel = (id) => priceMap[id] || "不明";
 
-
 const getMarkerIconByGenre = (genre) =>
   ({
     1: "https://maps.gstatic.com/mapfiles/ms2/micons/red-dot.png",
