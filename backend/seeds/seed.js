@@ -28,15 +28,15 @@ const getStores = async (csvFileName) => {
             price_level: Number(record.price_level),
             latitude: Number(record.latitude),
             longitude: Number(record.longitude),
-		    genre: Number(record.genre),
-		    reason: JSON.stringify(
-						Array.isArray(record.reason)
-						  ? record.reason.map(Number)
-						  : String(record.reason)
-							 .replace(/[\[\]\s]/g, '')
-							 .split(',')
-							 .map(Number)
-			),
+            genre: Number(record.genre),
+            reason: JSON.stringify(
+                Array.isArray(record.reason)
+                    ? record.reason.map(Number)
+                    : String(record.reason)
+                          .replace(/[\[\]\s]/g, '')
+                          .split(',')
+                          .map(Number)
+            ),
         }));
 
         return stores;
