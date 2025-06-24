@@ -6,13 +6,14 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import { genreMap, reasonMap, priceMap } from "@/config/options";
 
 const props = defineProps({
   showOnlyOpen: Boolean,
   reloadTrigger: Number,
-  selectedGenre: String,
-  selectedPrice: String,
-  selectedReason: String,
+  selectedGenre: Number,
+  selectedPrice: Number,
+  selectedReason: Number,
 });
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -58,13 +59,15 @@ const isOpenNow = (hours) => {
   });
 };
 
-const formatPriceLevel = (level) =>
-  ({
-    1: "~500",
-    2: "501~999",
-    3: "1000~1500",
-    4: "1501~",
-  })[level] ?? "不明";
+const formatGenre = (id) => genreMap[id] || "不明";
+const formatReason = (reasonIds) => {
+  if (!Array.isArray(reasonIds)) return reasonMap[reasonIds] || "不明";
+  return reasonIds
+    .map((id) => reasonMap[id] || "不明")
+    .join("、"); // 「、」で区切る（カンマでも可）
+};
+const formatPriceLevel = (id) => priceMap[id] || "不明";
+
 
 const getMarkerIconByGenre = (genre) =>
   ({
@@ -74,6 +77,7 @@ const getMarkerIconByGenre = (genre) =>
     4: "https://maps.gstatic.com/mapfiles/ms2/micons/blue-dot.png",
     5: "https://maps.gstatic.com/mapfiles/ms2/micons/purple-dot.png",
     6: "https://maps.gstatic.com/mapfiles/ms2/micons/orange-dot.png",
+    7: "https://maps.gstatic.com/mapfiles/ms2/micons/ltblue-dot.png",
   })[genre] ?? "https://maps.gstatic.com/mapfiles/ms2/micons/ltblue-dot.png";
 
 let mapsApiLoaded = false;
@@ -146,9 +150,9 @@ const addMarkers = () => {
         <div style="padding:5px; max-width:250px;">
           <h3>${store.name}</h3>
           <p>住所: ${store.address}</p>
-          <p>ジャンル: ${store.genre}</p>
-          <p>おすすめ: ${store.reason}</p>
-          <p>価格帯: ${formatPriceLevel(store.price_level)}</p>
+		  <p>ジャンル: ${formatGenre(store.genre)}</p>
+		  <p>おすすめ: ${formatReason(store.reason)}</p>
+		  <p>価格帯: ${formatPriceLevel(store.price_level)}</p>
         </div>
       `,
     });
@@ -165,7 +169,18 @@ const addMarkers = () => {
 
 const fetchStores = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/stores");
+   const params = new URLSearchParams();
+
+   if (props.showOnlyOpen) params.append("is_open", "1");
+   if (props.selectedGenre) params.append("genre", props.selectedGenre.toString());
+   if (props.selectedPrice) params.append("price_level", props.selectedPrice.toString());
+   if (props.selectedReason) params.append("reason", props.selectedReason.toString());
+
+   const url = `http://localhost:3000/api/stores?${params.toString()}`;
+   console.log("📡 取得URL:", url);
+
+   const res = await fetch(url);
+
     stores.value = await res.json();
   } catch (err) {
     console.error("📡 店舗データ取得失敗:", err);

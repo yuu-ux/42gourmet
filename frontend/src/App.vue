@@ -13,6 +13,8 @@
         <v-select
           v-model="selectedPrice"
           :items="priceOptions"
+		  item-title="title"
+		  item-value="value"
           label="価格帯"
           clearable
           hide-details
@@ -24,6 +26,8 @@
         <v-select
           v-model="selectedGenre"
           :items="genreOptions"
+		  item-title="title"
+		  item-value="value"
           label="ジャンル"
           clearable
           hide-details
@@ -35,6 +39,8 @@
         <v-select
           v-model="selectedReason"
           :items="reasonOptions"
+		  item-title="title"
+		  item-value="value"
           label="おすすめ理由"
           clearable
           hide-details
@@ -75,6 +81,7 @@
 import { ref } from "vue";
 import MapView from "./components/MapView.vue";
 import RegisterSidebar from "./components/RegisterSidebar.vue";
+import { genreOptions, reasonOptions, priceOptions } from "@/config/options";
 
 const drawer = ref(false);
 const showOnlyOpen = ref(false);
@@ -91,18 +98,6 @@ const toggleSidebar = () => {
 const selectedGenre = ref(null);
 const selectedPrice = ref(null);
 const selectedReason = ref(null);
-
-const genreOptions = [
-  "和食",
-  "中華",
-  "洋食",
-  "アジアン",
-  "カフェ",
-  "居酒屋",
-  "その他",
-];
-const priceOptions = ["~500", "501~999", "1000~1500", "1501~"];
-const reasonOptions = ["コスパが良い", "提供が早い", "味が最高", "栄養満点"];
 
 const resetFilters = () => {
   selectedGenre.value = null;
