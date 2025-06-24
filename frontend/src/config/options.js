@@ -19,9 +19,9 @@ export const priceOptions = [1, 2, 3, 4];
 
 export const priceLabels = {
     1: '~500',
-    2: '500~999',
+    2: '501~999',
     3: '1000~1500',
-    4: '1500~',
+    4: '1501~',
 };
 
 export const genreMap = {
