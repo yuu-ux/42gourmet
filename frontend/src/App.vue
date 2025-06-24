@@ -81,6 +81,7 @@
 import { ref } from "vue";
 import MapView from "./components/MapView.vue";
 import RegisterSidebar from "./components/RegisterSidebar.vue";
+import { genreOptions, reasonOptions, priceOptions, priceLabels } from "@/config/options";
 
 const drawer = ref(false);
 const showOnlyOpen = ref(false);
@@ -97,30 +98,6 @@ const toggleSidebar = () => {
 const selectedGenre = ref(null);
 const selectedPrice = ref(null);
 const selectedReason = ref(null);
-
-const genreOptions = [
-  { title: "和食", value: 1 },
-  { title: "中華", value: 2 },
-  { title: "洋食", value: 3 },
-  { title: "アジアン", value: 4 },
-  { title: "カフェ", value: 5 },
-  { title: "居酒屋", value: 6 },
-  { title: "その他", value: 7 },
-];
-
-const priceOptions = [
-  { title: "~500", value: 1 },
-  { title: "~999", value: 2 },
-  { title: "~1500", value: 3 },
-  { title: "1501~", value: 4 },
-];
-
-const reasonOptions = [
-  { title: "コスパが良い", value: 1 },
-  { title: "提供が早い", value: 2 },
-  { title: "味が最高", value: 3 },
-  { title: "栄養満点", value: 4 },
-];
 
 const resetFilters = () => {
   selectedGenre.value = null;

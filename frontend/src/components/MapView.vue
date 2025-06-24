@@ -6,6 +6,7 @@
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
+import { genreMap, reasonMap, priceMap } from "@/config/options";
 
 const props = defineProps({
   showOnlyOpen: Boolean,
@@ -56,28 +57,6 @@ const isOpenNow = (hours) => {
       nowMinutes <= timeToMinutes(h.close_time)
     );
   });
-};
-
-const genreMap = {
-  1: "和食",
-  2: "中華",
-  3: "洋食",
-  4: "アジアン",
-  5: "カフェ",
-  6: "居酒屋",
-  7: "その他",
-};
-const reasonMap = {
-  1: "コスパが良い",
-  2: "提供が早い",
-  3: "味が最高",
-  4: "栄養満点",
-};
-const priceMap = {
-  1: "~500",
-  2: "501~999",
-  3: "1000~1500",
-  4: "1501~",
 };
 
 const formatGenre = (id) => genreMap[id] || "不明";
