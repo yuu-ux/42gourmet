@@ -57,8 +57,8 @@
         label="価格帯"
         dense
         class="mt-3"
-		:item-title="(item) => priceLabels[item]"
-        :item-value="(item) => item"
+		item-title="title"
+        item-value="value"
       />
 
       <v-btn color="success" block class="mt-4" @click="registerStore"
@@ -70,7 +70,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { genreOptions, reasonOptions, priceOptions, priceLabels } from "@/config/options";
+import { genreOptions, reasonOptions, priceOptions } from "@/config/options";
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
