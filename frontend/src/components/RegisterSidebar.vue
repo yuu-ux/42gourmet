@@ -53,7 +53,7 @@
 
       <v-select
         v-model="price"
-        :items="priceOptionsForRegister"
+        :items="priceOptions"
         label="価格帯"
         dense
         class="mt-3"
@@ -70,7 +70,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { genreOptions, reasonOptions, priceOptionsForRegister } from "@/config/options";
+import { genreOptions, reasonOptions, priceOptions } from "@/config/options";
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
