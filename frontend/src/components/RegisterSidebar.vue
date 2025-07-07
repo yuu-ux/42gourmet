@@ -151,11 +151,6 @@ const selectPlace = async (place) => {
     };
 
     searchResults.value = [];
-
-    console.log(
-      "▶ opening_hours.weekday_text",
-      details.opening_hours?.weekday_text || "(none)",
-    );
 };
 
 async function fetchJapaneseAddress(lat, lng) {
@@ -163,7 +158,6 @@ async function fetchJapaneseAddress(lat, lng) {
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&language=ja&key=${API_KEY}`
   );
   const data = await res.json();
-  console.log("📦 Geocoding API レスポンス:", data); // ← 追加
   return data.results?.[0]?.formatted_address || "住所不明";
 }
 
@@ -297,7 +291,6 @@ const parseOpeningHours = (weekdayText) => {
       }
     }
 
-    console.log("▶ parseOpeningHours result:", result);
     return result;
   } catch (e) {
     console.error("parseOpeningHours で例外:", e);

@@ -176,7 +176,6 @@ const fetchStores = async () => {
    if (props.selectedReason) params.append("reason", props.selectedReason.toString());
 
    const url = `http://localhost:3000/api/stores?${params.toString()}`;
-   console.log("📡 取得URL:", url);
 
    const res = await fetch(url);
 
