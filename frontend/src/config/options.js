@@ -1,4 +1,4 @@
-export function createMap(options) {
+const createMap = (options) => {
     return options.reduce((acc, option) => {
         acc[option.value] = option.title;
         return acc;
