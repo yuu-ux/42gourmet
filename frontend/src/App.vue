@@ -20,7 +20,7 @@
           hide-details
           density="compact"
           style="max-width: 150px; margin-right: 10px"
-          @update:modelValue="reloadMapTrigger++"
+          @change="reloadMapTrigger++"
         />
 
         <v-select
@@ -33,7 +33,7 @@
           hide-details
           density="compact"
           style="max-width: 150px; margin-right: 10px"
-          @update:modelValue="reloadMapTrigger++"
+          @change="reloadMapTrigger++"
         />
 
         <v-select
@@ -46,7 +46,7 @@
           hide-details
           density="compact"
           style="max-width: 150px; margin-right: 10px"
-          @update:modelValue="reloadMapTrigger++"
+          @change="reloadMapTrigger++"
         />
 
         <v-checkbox
@@ -85,12 +85,11 @@ import { genreOptions, reasonOptions, priceOptions } from "@/config/options";
 
 const drawer = ref(false);
 const showOnlyOpen = ref(false);
-
 const reloadMapTrigger = ref(0);
+
 const handleStoreRegistered = () => {
   reloadMapTrigger.value++;
 };
-
 const toggleSidebar = () => {
   drawer.value = !drawer.value;
 };

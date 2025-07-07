@@ -57,8 +57,8 @@
         label="価格帯"
         dense
         class="mt-3"
-		:item-title="(item) => priceLabels[item]"
-        :item-value="(item) => item"
+		item-title="title"
+        item-value="value"
       />
 
       <v-btn color="success" block class="mt-4" @click="registerStore"
@@ -70,7 +70,7 @@
 
 <script setup>
 import { ref } from "vue";
-import { genreOptions, reasonOptions, priceOptions, priceLabels } from "@/config/options";
+import { genreOptions, reasonOptions, priceOptions } from "@/config/options";
 
 
 const API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
@@ -130,9 +130,10 @@ const selectPlace = async (place) => {
     return;
   }
 
-  loadMapReference();
+  try {
+    loadMapReference();
 
-  const details = await getDetailsPromise(place.place_id);
+    const details = await getDetailsPromise(place.place_id);
 
     if (!details.geometry || !details.name || !details.formatted_address) {
       alert("このお店の情報が不足しています。別のお店を選んでください。");
@@ -141,7 +142,7 @@ const selectPlace = async (place) => {
 
     const lat = details.geometry.location.lat();
     const lng = details.geometry.location.lng();
-    const jaAddress = await fetchJapaneseAddress(lat, lng); // ← awaitはOK
+    const jaAddress = await fetchJapaneseAddress(lat, lng);
 
     selectedPlace.value = {
       name: details.name,
@@ -151,19 +152,17 @@ const selectPlace = async (place) => {
     };
 
     searchResults.value = [];
-
-    console.log(
-      "▶ opening_hours.weekday_text",
-      details.opening_hours?.weekday_text || "(none)",
-    );
+  } catch (error) {
+    console.error("場所の詳細取得エラー:", error);
+    alert("場所の詳細を取得できませんでした。もう一度お試しください。");
+  }
 };
 
-async function fetchJapaneseAddress(lat, lng) {
+const fetchJapaneseAddress = async (lat, lng) => {
   const res = await fetch(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&language=ja&key=${API_KEY}`
   );
   const data = await res.json();
-  console.log("📦 Geocoding API レスポンス:", data); // ← 追加
   return data.results?.[0]?.formatted_address || "住所不明";
 }
 
@@ -212,7 +211,7 @@ const registerStore = async () => {
   }
 };
 
-function convertTo24Hour(timeStr, suffix) {
+const convertTo24Hour = (timeStr, suffix) => {
   if (!timeStr || !suffix) {
     console.warn("Invalid time input:", timeStr, suffix);
     return "00:00";
@@ -297,7 +296,6 @@ const parseOpeningHours = (weekdayText) => {
       }
     }
 
-    console.log("▶ parseOpeningHours result:", result);
     return result;
   } catch (e) {
     console.error("parseOpeningHours で例外:", e);

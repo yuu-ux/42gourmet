@@ -1,3 +1,10 @@
+const createMap = (options) => {
+    return options.reduce((acc, option) => {
+        acc[option.value] = option.title;
+        return acc;
+    }, {});
+};
+
 export const genreOptions = [
     { title: '和食', value: 1 },
     { title: '中華', value: 2 },
@@ -22,33 +29,6 @@ export const priceOptions = [
     { title: '1501~', value: 4 },
 ];
 
-export const priceLabels = {
-    1: '~500',
-    2: '501~999',
-    3: '1000~1500',
-    4: '1501~',
-};
-
-export const genreMap = {
-    1: '和食',
-    2: '中華',
-    3: '洋食',
-    4: 'アジアン',
-    5: 'カフェ',
-    6: '居酒屋',
-    7: 'その他',
-};
-
-export const reasonMap = {
-    1: 'コスパが良い',
-    2: '提供が早い',
-    3: '味が最高',
-    4: '栄養満点',
-};
-
-export const priceMap = {
-    1: '~500',
-    2: '501~999',
-    3: '1000~1500',
-    4: '1501~',
-};
+export const priceMap = createMap(priceOptions);
+export const reasonMap = createMap(reasonOptions);
+export const genreMap = createMap(genreOptions);
