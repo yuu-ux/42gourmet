@@ -3,7 +3,7 @@ const createMap = (options) => {
         acc[option.value] = option.title;
         return acc;
     }, {});
-}
+};
 
 export const genreOptions = [
     { title: '和食', value: 1 },
