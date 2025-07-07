@@ -178,6 +178,9 @@ const fetchStores = async () => {
    const url = `http://localhost:3000/api/stores?${params.toString()}`;
 
    const res = await fetch(url);
+   if (!res.ok) {
+     throw new Error(`HTTP error! status: ${res.status}`);
+   }
 
     stores.value = await res.json();
   } catch (err) {

@@ -130,9 +130,10 @@ const selectPlace = async (place) => {
     return;
   }
 
-  loadMapReference();
+  try {
+    loadMapReference();
 
-  const details = await getDetailsPromise(place.place_id);
+    const details = await getDetailsPromise(place.place_id);
 
     if (!details.geometry || !details.name || !details.formatted_address) {
       alert("このお店の情報が不足しています。別のお店を選んでください。");
@@ -151,6 +152,10 @@ const selectPlace = async (place) => {
     };
 
     searchResults.value = [];
+  } catch (error) {
+    console.error("場所の詳細取得エラー:", error);
+    alert("場所の詳細を取得できませんでした。もう一度お試しください。");
+  }
 };
 
 const fetchJapaneseAddress = async (lat, lng) => {
