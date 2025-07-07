@@ -141,7 +141,7 @@ const selectPlace = async (place) => {
 
     const lat = details.geometry.location.lat();
     const lng = details.geometry.location.lng();
-    const jaAddress = await fetchJapaneseAddress(lat, lng); // ← awaitはOK
+    const jaAddress = await fetchJapaneseAddress(lat, lng);
 
     selectedPlace.value = {
       name: details.name,
@@ -153,7 +153,7 @@ const selectPlace = async (place) => {
     searchResults.value = [];
 };
 
-async function fetchJapaneseAddress(lat, lng) {
+const fetchJapaneseAddress = async (lat, lng) => {
   const res = await fetch(
     `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&language=ja&key=${API_KEY}`
   );
@@ -206,7 +206,7 @@ const registerStore = async () => {
   }
 };
 
-function convertTo24Hour(timeStr, suffix) {
+const convertTo24Hour = (timeStr, suffix) => {
   if (!timeStr || !suffix) {
     console.warn("Invalid time input:", timeStr, suffix);
     return "00:00";
